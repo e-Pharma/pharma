@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/home/sankha/Documents/CS/_UCSC/3rd Year/Group Project II (C-3)/e-Pharma org/pharma/android/app/src/main/shaders"/></dataSet><dataSet config="debug" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/home/sankha/Documents/CS/_UCSC/3rd Year/Group Project II (C-3)/e-Pharma org/pharma/android/app/src/debug/shaders"/></dataSet></merger>

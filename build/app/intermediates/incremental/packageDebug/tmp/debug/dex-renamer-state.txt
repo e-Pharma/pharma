@@ -1,0 +1,4 @@
+#Mon May 18 13:10:14 IST 2020
+base.0=/home/sankha/Documents/CS/_UCSC/3rd Year/Group Project II (C-3)/e-Pharma org/pharma/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
