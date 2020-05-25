@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharma/screens/home_screen/home.dart';
 
 class StartMenu extends StatefulWidget {
   @override
@@ -29,7 +30,7 @@ class _StartMenuState extends State<StartMenu> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  "E-pharma ",
+                  "e-Pharma ",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 40.0,
@@ -50,7 +51,12 @@ class _StartMenuState extends State<StartMenu> {
                     shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0)),
                     color: Colors.cyan[400],
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context, 
+                        MaterialPageRoute(builder: (context) => HomeScreen()),
+                      );
+                    },
                     child: new Container(
                       padding: const EdgeInsets.symmetric(
                         vertical: 20.0,
