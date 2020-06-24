@@ -12,29 +12,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: DefaultTabController(
-        length: choices.length,
+        length: 3,
         child: Scaffold(
           drawer: Drawer(
             child: ListView(
               padding: EdgeInsets.zero,
               children: <Widget> [
-                /*UserAccountsDrawerHeader(
-                  //UserAccountsDrawerHeader
-                  margin: EdgeInsets.zero,
-                  accountName: Text('Sankha Jay'),
-                  accountEmail: Text('sankharc@gmail.com'),
-                  currentAccountPicture: CircleAvatar(
-                    backgroundColor: 
-                      Theme.of(context).platform == TargetPlatform.android
-                        ? Colors.cyan[200]
-                        : Colors.white,
-                    child: Text(
-                      'S',
-                      style: TextStyle(fontSize: 40.0),                  
-                    ),
-                  ),
-                ),*/
                 DrawerHeader(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -91,32 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   'Log Out',
                   () => {},
                 ),
-                /*ListTile(
-                  leading: Icon(Icons.account_circle),
-                  title: Text('My Profile'),
-                  onTap: () {},
-                ),
-                ListTile(
-                  leading: Icon(Icons.message),
-                  title: Text('Messages'),
-                  onTap: () {},
-                ),
-                ListTile(
-                  leading: Icon(Icons.settings),
-                  title: Text('Settings'),
-                  onTap: () {},
-                ),*/
-                /*ListTile(
-                  title: Row(
-                    children: <Widget>[
-                      Icon(Icons.message),
-                      Padding(
-                        padding: EdgeInsets.only(left: 10.0),
-                        child: Text('messages'),
-                      ),
-                    ],
-                  ),
-                ),*/
+        
               ],
             ),
           ),
@@ -131,27 +91,71 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             bottom: TabBar(
-              isScrollable: true,
-              tabs: choices.map(
-                (Choice choice) {
-                    return Container(
-                      width: MediaQuery.of(context).size.width /4,
-                      child: Tab(
-                        text: choice.title,
-                        icon: Icon(choice.icon),
-                        
-                      ),
-                    );
-                }).toList(),
+              //isScrollable: true,
+              tabs: [
+                Tab(
+                  child: Text('ONGOING'),
+                ),
+                Tab(
+                  child: Text('PREVIOUS'),
+                ),
+                Tab(
+                  child: Text('MAP'),
+                ),
+              ],
               ),
             ),
             body: TabBarView(
-              children: choices.map((Choice choice) {
-                return Padding(
-                  padding: EdgeInsets.zero,
-                  //child: ChiceCard(choice: choice),
-                );
-              }).toList(),
+              children: [
+                new Card(
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    children: <Widget> [
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Container(
+                          padding: const EdgeInsets.all(10.0),
+                          child: FittedBox(
+                          child: Material(
+                            color: Colors.white,
+                            elevation: 14.0,
+                            borderRadius: BorderRadius.circular(24.0),
+                            shadowColor: Colors.cyan[200],
+                            child: Row(
+                              children: <Widget> [
+                                Container(
+                                  child: Text(
+                                    'Order Details',
+                                    
+                                  ),
+                                ),
+                                //SizedBox(width:50.0),
+                                Container(
+                                  child: ClipRRect(
+                                    child: Icon(
+                                      Icons.add_circle,
+                                      color: Colors.cyan[400],
+                                    )
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                new Card(
+                  color: Colors.yellow[50],
+                  child: Center(child: Text('Tab2')),
+                ),
+                new Card(
+                  color: Colors.yellow[200],
+                  child: Center(child: Text('Tab3')),
+                ),
+              ],
             ),
           ),
         ),
@@ -164,14 +168,6 @@ class Choice {
   final String title; //properties
   final IconData icon;
 }
-
-const List<Choice> choices = const <Choice> [
-  //const Choice(icon:Icons.dehaze),
-  const Choice(title: 'CHATS'),
-  const Choice(title: 'STATUS'),
-  const Choice(title: 'CALLS'),
-];
-
 
 class CustomListTile extends StatelessWidget {
   IconData icon;
