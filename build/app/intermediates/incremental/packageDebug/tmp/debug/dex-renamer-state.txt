@@ -1,4 +1,0 @@
-#Wed Jun 24 15:28:26 IST 2020
-base.0=C\:\\Users\\ACER\\Desktop\\3Yr1Sem\\groupproject\\flutter\\flutterExcercise\\pharma\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
-path.0=classes.dex
-renamed.0=classes.dex

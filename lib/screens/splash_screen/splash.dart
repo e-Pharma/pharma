@@ -23,9 +23,9 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Column(
           children: <Widget>[
-            // Logo(), //sing stateless widget classses to show images
+            // Logo(), //sing stateless widget classes to show images
             SizedBox(
-              height: MediaQuery.of(context).size.height/3
+                height: MediaQuery.of(context).size.height/3
             ),
             Text(
               "Welcome to e-Pharma",
