@@ -142,7 +142,7 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
                       Navigator.pushNamed(context, '/auth');
                     },
                     color: Colors.cyan,
-                    textColor: Colors.grey,
+                    textColor: Colors.white,
                     child: Text('Menu')
                 ),
               ),
