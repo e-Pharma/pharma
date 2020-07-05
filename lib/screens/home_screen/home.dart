@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:epharma/screens/my_profile/myProfilePage.dart';
 import 'package:folding_cell/folding_cell.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 //import 'package:flutter/src/widgets/navigator.dart';
 
@@ -12,6 +13,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -45,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             'Michael',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 25,
+                              fontSize: 20,
                             ),
                           ),
                         ),
@@ -117,6 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: <Widget> [
                       Container(
                         child: SimpleFoldingCell(
+                          key: _foldingCellKey,
                           frontWidget: FrontWidget(), 
                           innerTopWidget: InnerTopWidget(), 
                           innerBottomWidget: InnerBottomWidget(),
@@ -128,26 +131,33 @@ class _HomeScreenState extends State<HomeScreen> {
                           onClose: () => print('cell closed'),
                         ),
                       ),
-
-                      /*Container(
-                        child: SimpleFoldingCell(
-                          frontWidget: FrontWidget(), 
-                          innerTopWidget: InnerTopWidget(), 
-                          innerBottomWidget: InnerBottomWidget(),
-                                                  
-                          cellSize: Size(MediaQuery.of(context).size.width,175),
-                          padding: EdgeInsets.all(10.0),
-                        ),
-                      ),*/
                     ],
                   ),
                 ),
               new Card(
-                color: Colors.yellow[50],
-                child: Center(child: Text('Tab2')),
+                color: Color(0xffdfd4f4),
+                child: ListView(
+                    scrollDirection: Axis.vertical,
+                    children: <Widget> [
+                      Container(
+                        child: SimpleFoldingCell(
+                          key: _foldingCellKey,
+                          frontWidget: FrontWidget(), 
+                          innerTopWidget: InnerTopWidget(), 
+                          innerBottomWidget: InnerBottomWidgetOnGoing(),
+                                                  
+                          cellSize: Size(MediaQuery.of(context).size.width,175),
+                          padding: EdgeInsets.all(10.0),
+
+                          onOpen: () => print('cell opened'),
+                          onClose: () => print('cell closed'),
+                        ),
+                      ),
+                    ],
+                  ),
               ),
               new Card(
-                color: Colors.yellow[200],
+                color: Color(0xffdfd4f4),
                 child: Center(child: Text('Tab3')),
               ),
             ],
@@ -155,42 +165,32 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-  }}
-
-Container InnerTopWidget() {
+  }
+Container InnerBottomWidgetOnGoing() {
   return Container(
-    color: Colors.red,
-    alignment: Alignment.center,
-    child: Container(
-      child: Column(
-        children: <Widget>[
-          Container(),
-          Container(),
-          Row(
-            children: <Widget>[
-              Container(),
-              Container(),
-            ],
-          ),
-        ],
-      ),
+    color: Colors.white,
+    alignment: Alignment.bottomCenter,
+    child: Padding(
+      padding: EdgeInsets.only(bottom:10),
+      
+      child: FlatButton(
+        onPressed: () => _foldingCellKey?.currentState?.toggleFold(),
+        child: Text("Start Ride"),
+        textColor: Colors.black,
+        color: Colors.red[300],
+        splashColor: Colors.white.withOpacity(0.5),
+      ), 
     ),
-
   );
 }
 
-Container InnerBottomWidget() {
-  return Container(
-    color: Colors.yellow,
-  );
-}
-                          
-Container FrontWidget() {
+  Container FrontWidget() {
   return Container(
     color: Color(0xffdfd4f4),
     alignment: Alignment.center,
     child: Row(
       children: <Widget> [
+        
         Expanded(
           flex: 1,
           child: Container(
@@ -289,6 +289,15 @@ Container FrontWidget() {
                     ],
                   ),
                 ),
+                Container(
+                  child: FlatButton(
+                    onPressed: () => _foldingCellKey?.currentState?.toggleFold(),
+                    child: Text("Open"),
+                    textColor: Colors.black,
+                    color: Colors.cyan[400],
+                    splashColor: Colors.white.withOpacity(0.5),
+                  ),
+                ),
               ],
             ),
           ),
@@ -296,6 +305,175 @@ Container FrontWidget() {
       ],
     ),
   );
+}
+  Container InnerTopWidget() {
+  return Container(
+    color: Colors.cyan[400],
+    alignment: Alignment.center,
+    child: Container(
+      child: Column(
+        children: <Widget>[
+          Container(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Order Details",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 22.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            child: Row(
+              children: <Widget> [
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 5, 5, 5),
+                      child: Icon(
+                        Icons.account_circle,
+                        color: Colors.black,
+                        size: 20.0,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          'Mr.Joseph',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            child: Row(
+              children: <Widget> [
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 5, 5, 5),
+                      child: Icon(
+                        Icons.call,
+                        color: Colors.black,
+                        size: 20.0,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          '0712282935',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            child: Row(
+              children: <Widget> [
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 5, 5, 5),
+                      child: Icon(
+                        Icons.today,
+                        color: Colors.black,
+                        size: 20.0,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          '8-7-2020',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            child: Row(
+              children: <Widget> [
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 5, 5, 5),
+                      child: Icon(
+                        Icons.room,
+                        color: Colors.black,
+                        size: 20.0,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          'Gangodawila, Nugegoda',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Row(
+            children: <Widget>[
+              Container(
+                child: Padding(
+                  padding: EdgeInsets.all(5.0),
+                ),
+              ),
+              Container(),
+            ],
+          ),
+        ],
+      ),
+    ),
+
+  );
+}
+  Container InnerBottomWidget() {
+  return Container(
+    color: Colors.white,
+    alignment: Alignment.bottomCenter,
+    child: Padding(
+      padding: EdgeInsets.only(bottom:10),
+      child: FlatButton(
+        onPressed: () => _foldingCellKey?.currentState?.toggleFold(),
+        child: Text("Accept"),
+        textColor: Colors.black,
+        color: Colors.green[300],
+        splashColor: Colors.white.withOpacity(0.5),
+      ), 
+    ),
+  );
+}
 }
 
 class Choice {
