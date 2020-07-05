@@ -198,7 +198,7 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
                     textAlign: TextAlign.left,
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'youremail@email.com',
+                      hintText: '',
                       hintStyle: TextStyle(color: Colors.grey),
                     ),
                   ),
@@ -249,7 +249,7 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
                     textAlign: TextAlign.left,
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: '*********',
+                      hintText: '',
                       hintStyle: TextStyle(color: Colors.grey),
                     ),
                   ),
@@ -542,7 +542,7 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
                     textAlign: TextAlign.left,
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'youremail@email.com',
+                      hintText: '',
                       hintStyle: TextStyle(color: Colors.grey),
                     ),
                   ),
@@ -593,7 +593,7 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
                     textAlign: TextAlign.left,
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: '*********',
+                      hintText: '',
                       hintStyle: TextStyle(color: Colors.grey),
                     ),
                   ),
@@ -644,7 +644,7 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
                     textAlign: TextAlign.left,
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: '*********',
+                      hintText: '',
                       hintStyle: TextStyle(color: Colors.grey),
                     ),
                   ),
