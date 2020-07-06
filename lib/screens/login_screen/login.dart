@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:epharma/services/auth_service.dart';
+import 'package:epharma/routes/application.dart';
 
 class StartMenu extends StatefulWidget {
   @override
@@ -7,9 +10,45 @@ class StartMenu extends StatefulWidget {
 
 class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
 
+  String _user_name, _password;
+  static final _formKey = new GlobalKey<FormState>();
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+  bool isenabled;
+
   @override
   void initState() {
     super.initState();
+    isenabled = true;
+  }
+
+  Future _handleLogin(
+      String _id,
+      String _password,
+      BuildContext context,
+      ) async {
+    AuthService().login(_id, _password).then((res) {
+      if (res) {
+        Application.router.navigateTo(context, '/home', clearStack: true);
+      } else {
+        isenabled = true;
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text("Invalid credentials"),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text("Okay"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+              );
+            });
+      }
+    });
+    //isenabled = true;
   }
 
   Widget StartMenuPage() {
@@ -18,7 +57,7 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
       body: Column(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.only(top: 120.0),
+            padding: EdgeInsets.only(top: 120.0, bottom: 60.0),
             child: Center(
               child: Icon(
                 Icons.local_hospital,
@@ -33,7 +72,7 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  "E-pharma ",
+                  "ePharma ",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 40.0,
@@ -43,47 +82,47 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
               ],
             ),
           ),
+//          Container(
+//            width: MediaQuery.of(context).size.width,
+//            margin: const EdgeInsets.only(left: 30.0, right: 30.0, top: 125.0),
+//            alignment: Alignment.center,
+//            child: new Row(
+//              children: <Widget>[
+//                new Expanded(
+//                  child: new FlatButton(
+//                    shape: new RoundedRectangleBorder(
+//                        borderRadius: new BorderRadius.circular(40.0)),
+//                    color: Colors.cyan[400],
+//                    onPressed: () => gotoSignUp(),
+//                    child: new Container(
+//                      padding: const EdgeInsets.symmetric(
+//                        vertical: 20.0,
+//                        horizontal: 20.0,
+//                      ),
+//                      child: new Row(
+//                        mainAxisAlignment: MainAxisAlignment.center,
+//                        children: <Widget>[
+//                          new Expanded(
+//                            child: Text(
+//                              "SIGN UP",
+//                              textAlign: TextAlign.center,
+//                              style: TextStyle(
+//                                  color: Colors.white,
+//                                  fontSize: 18.0,
+//                                  fontWeight: FontWeight.bold),
+//                            ),
+//                          ),
+//                        ],
+//                      ),
+//                    ),
+//                  ),
+//                ),
+//              ],
+//            ),
+//          ),
           Container(
             width: MediaQuery.of(context).size.width,
-            margin: const EdgeInsets.only(left: 30.0, right: 30.0, top: 125.0),
-            alignment: Alignment.center,
-            child: new Row(
-              children: <Widget>[
-                new Expanded(
-                  child: new FlatButton(
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(40.0)),
-                    color: Colors.cyan[400],
-                    onPressed: () => gotoSignUp(),
-                    child: new Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 20.0,
-                        horizontal: 20.0,
-                      ),
-                      child: new Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          new Expanded(
-                            child: Text(
-                              "SIGN UP",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            margin: const EdgeInsets.only(left: 30.0, right: 30.0, top: 30.0),
+            margin: const EdgeInsets.only(left: 30.0, right: 30.0, top: 150.0),
             alignment: Alignment.center,
             child: new Row(
               children: <Widget>[
@@ -130,26 +169,26 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
       body:
       Column(
         children: <Widget>[
+//          Container(
+//            child: SafeArea(
+//              child: Align(
+//                alignment: Alignment.topLeft,
+//                child: FlatButton(
+//                    shape: new RoundedRectangleBorder(
+//                      borderRadius: new BorderRadius.circular(30.0),
+//                    ),
+//                    onPressed: () {
+//                      Navigator.pushNamed(context, '/auth');
+//                    },
+//                    color: Colors.cyan,
+//                    textColor: Colors.white,
+//                    child: Text('Menu')
+//                ),
+//              ),
+//            ),
+//          ),
           Container(
-            child: SafeArea(
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: FlatButton(
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0),
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/auth');
-                    },
-                    color: Colors.cyan,
-                    textColor: Colors.white,
-                    child: Text('Menu')
-                ),
-              ),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.all(30.0),
+            padding: EdgeInsets.only(top: 100.0),
             child: Center(
               child: Icon(
                 Icons.local_hospital,
@@ -162,7 +201,7 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
             children: <Widget>[
               new Expanded(
                 child: new Padding(
-                  padding: const EdgeInsets.fromLTRB(30.0, 0.0, 0.0, 0.0),
+                  padding: const EdgeInsets.fromLTRB(30.0, 85.0, 0.0, 0.0),
                   child: new Text(
                     "EMAIL",
                     style: TextStyle(
@@ -206,14 +245,14 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
               ],
             ),
           ),
-          Divider(
-            height: 10.0,
-          ),
+//          Divider(
+//            height: 10.0,
+//          ),
           new Row(
             children: <Widget>[
               new Expanded(
                 child: new Padding(
-                  padding: const EdgeInsets.only(left: 30.0),
+                  padding: const EdgeInsets.only(top:10.0, left: 30.0),
                   child: new Text(
                     "PASSWORD",
                     style: TextStyle(
@@ -257,9 +296,9 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
               ],
             ),
           ),
-          Divider(
-            height: 10.0,
-          ),
+//          Divider(
+//            height: 10.0,
+//          ),
           new Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
@@ -292,9 +331,11 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
                       borderRadius: new BorderRadius.circular(30.0),
                     ),
                     color: Colors.cyan,
-                    onPressed: (){
-                      Navigator.pushNamed(context, '/home');
-                    },
+                    onPressed: () => _handleLogin('driver', '123', context)
+//                    {
+//                      Navigator.pushNamed(context, '/home');
+//                    }
+                    ,
                     child: new Container(
                       padding: const EdgeInsets.symmetric(
                         vertical: 20.0,
@@ -320,150 +361,150 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
               ],
             ),
           ),
-          new Container(
-            width: MediaQuery.of(context).size.width,
-            margin: const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
-            alignment: Alignment.center,
-            child: Row(
-              children: <Widget>[
-                new Expanded(
-                  child: new Container(
-                    margin: EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(border: Border.all(width: 0.25)),
-                  ),
-                ),
-                Text(
-                  "OR CONNECT WITH",
-                  style: TextStyle(
-                    color: Colors.cyan[200],
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                new Expanded(
-                  child: new Container(
-                    margin: EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(border: Border.all(width: 0.25)),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          new Container(
-            width: MediaQuery.of(context).size.width,
-            margin: const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
-            child: new Row(
-              children: <Widget>[
-                new Expanded(
-                  child: new Container(
-                    margin: EdgeInsets.only(right: 8.0),
-                    alignment: Alignment.center,
-                    child: new Row(
-                      children: <Widget>[
-                        new Expanded(
-                          child: new FlatButton(
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(30.0),
-                            ),
-                            color: Color(0Xff3B5998),
-                            onPressed: () => {},
-                            child: new Container(
-                              child: new Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  new Expanded(
-                                    child: new FlatButton(
-                                      onPressed: ()=>{},
-                                      padding: EdgeInsets.only(
-                                        top: 20.0,
-                                        bottom: 20.0,
-                                      ),
-                                      child: new Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
-                                          Icon(
-                                            const IconData(0xea90,
-                                                fontFamily: 'icomoon'),
-                                            color: Colors.white,
-                                            size: 15.0,
-                                          ),
-                                          Text(
-                                            "FACEBOOK",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                new Expanded(
-                  child: new Container(
-                    margin: EdgeInsets.only(left: 8.0),
-                    alignment: Alignment.center,
-                    child: new Row(
-                      children: <Widget>[
-                        new Expanded(
-                          child: new FlatButton(
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(30.0),
-                            ),
-                            color: Color(0Xffdb3236),
-                            onPressed: () => {},
-                            child: new Container(
-                              child: new Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  new Expanded(
-                                    child: new FlatButton(
-                                      onPressed: ()=>{},
-                                      padding: EdgeInsets.only(
-                                        top: 20.0,
-                                        bottom: 20.0,
-                                      ),
-                                      child: new Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                        children: <Widget>[
-                                          Icon(
-                                            const IconData(0xea88,
-                                                fontFamily: 'icomoon'),
-                                            color: Colors.white,
-                                            size: 15.0,
-                                          ),
-                                          Text(
-                                            "GOOGLE",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          )
+//          new Container(
+//            width: MediaQuery.of(context).size.width,
+//            margin: const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
+//            alignment: Alignment.center,
+//            child: Row(
+//              children: <Widget>[
+//                new Expanded(
+//                  child: new Container(
+//                    margin: EdgeInsets.all(8.0),
+//                    decoration: BoxDecoration(border: Border.all(width: 0.25)),
+//                  ),
+//                ),
+//                Text(
+//                  "OR CONNECT WITH",
+//                  style: TextStyle(
+//                    color: Colors.cyan[200],
+//                    fontWeight: FontWeight.bold,
+//                  ),
+//                ),
+//                new Expanded(
+//                  child: new Container(
+//                    margin: EdgeInsets.all(8.0),
+//                    decoration: BoxDecoration(border: Border.all(width: 0.25)),
+//                  ),
+//                ),
+//              ],
+//            ),
+//          ),
+//          new Container(
+//            width: MediaQuery.of(context).size.width,
+//            margin: const EdgeInsets.only(left: 30.0, right: 30.0, top: 20.0),
+//            child: new Row(
+//              children: <Widget>[
+//                new Expanded(
+//                  child: new Container(
+//                    margin: EdgeInsets.only(right: 8.0),
+//                    alignment: Alignment.center,
+//                    child: new Row(
+//                      children: <Widget>[
+//                        new Expanded(
+//                          child: new FlatButton(
+//                            shape: new RoundedRectangleBorder(
+//                              borderRadius: new BorderRadius.circular(30.0),
+//                            ),
+//                            color: Color(0Xff3B5998),
+//                            onPressed: () => {},
+//                            child: new Container(
+//                              child: new Row(
+//                                mainAxisAlignment: MainAxisAlignment.center,
+//                                children: <Widget>[
+//                                  new Expanded(
+//                                    child: new FlatButton(
+//                                      onPressed: ()=>{},
+//                                      padding: EdgeInsets.only(
+//                                        top: 20.0,
+//                                        bottom: 20.0,
+//                                      ),
+//                                      child: new Row(
+//                                        mainAxisAlignment:
+//                                        MainAxisAlignment.spaceEvenly,
+//                                        children: <Widget>[
+//                                          Icon(
+//                                            const IconData(0xea90,
+//                                                fontFamily: 'icomoon'),
+//                                            color: Colors.white,
+//                                            size: 15.0,
+//                                          ),
+//                                          Text(
+//                                            "FACEBOOK",
+//                                            textAlign: TextAlign.center,
+//                                            style: TextStyle(
+//                                                color: Colors.white,
+//                                                fontWeight: FontWeight.bold),
+//                                          ),
+//                                        ],
+//                                      ),
+//                                    ),
+//                                  ),
+//                                ],
+//                              ),
+//                            ),
+//                          ),
+//                        ),
+//                      ],
+//                    ),
+//                  ),
+//                ),
+//                new Expanded(
+//                  child: new Container(
+//                    margin: EdgeInsets.only(left: 8.0),
+//                    alignment: Alignment.center,
+//                    child: new Row(
+//                      children: <Widget>[
+//                        new Expanded(
+//                          child: new FlatButton(
+//                            shape: new RoundedRectangleBorder(
+//                              borderRadius: new BorderRadius.circular(30.0),
+//                            ),
+//                            color: Color(0Xffdb3236),
+//                            onPressed: () => {},
+//                            child: new Container(
+//                              child: new Row(
+//                                mainAxisAlignment: MainAxisAlignment.center,
+//                                children: <Widget>[
+//                                  new Expanded(
+//                                    child: new FlatButton(
+//                                      onPressed: ()=>{},
+//                                      padding: EdgeInsets.only(
+//                                        top: 20.0,
+//                                        bottom: 20.0,
+//                                      ),
+//                                      child: new Row(
+//                                        mainAxisAlignment:
+//                                        MainAxisAlignment.spaceEvenly,
+//                                        children: <Widget>[
+//                                          Icon(
+//                                            const IconData(0xea88,
+//                                                fontFamily: 'icomoon'),
+//                                            color: Colors.white,
+//                                            size: 15.0,
+//                                          ),
+//                                          Text(
+//                                            "GOOGLE",
+//                                            textAlign: TextAlign.center,
+//                                            style: TextStyle(
+//                                                color: Colors.white,
+//                                                fontWeight: FontWeight.bold),
+//                                          ),
+//                                        ],
+//                                      ),
+//                                    ),
+//                                  ),
+//                                ],
+//                              ),
+//                            ),
+//                          ),
+//                        ),
+//                      ],
+//                    ),
+//                  ),
+//                ),
+//              ],
+//            ),
+//          )
         ],
       ),
     );
@@ -753,3 +794,4 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
         ));
   }
 }
+
