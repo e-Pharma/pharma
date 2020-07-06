@@ -14,6 +14,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
+  final List<String> entries = <String>['52364', '12445', '97855', '44512'];
+  final List<String> address = <String>['Colombo-05', 'Maharagama', 'Dehiwala', 'Ward Place'];
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -69,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 CustomListTile(
                   Icons.notifications,
                   'Notifications',
-                  () => {},
+                  () => { Navigator.pushNamed(context, '/notification')},
                 ),
                 CustomListTile(
                   Icons.settings,
@@ -158,13 +161,170 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               new Card(
                 color: Color(0xffdfd4f4),
-                child: Center(child: Text('Tab3')),
+
+                    child: Container(
+                      child: ListView.separated(
+                        padding: const EdgeInsets.all(8),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: entries.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+//                            alignment: Alignment.centerLeft,
+                              height: 75,
+                              width: 500,
+                              color: Colors.white,
+                              child: Row(
+                                children: <Widget>[
+                                  Align(
+//                                  alignment: Alignment.center,
+                                    child: Text(
+                                        '   Order Id: #${entries[index]}                    ',
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                        )
+                                    ),
+                                  ),
+                                  Container(
+                                    alignment: Alignment.centerRight,
+                                    child: FlatButton(
+                                        padding: EdgeInsets.zero,
+                                        textColor: Colors.white,
+                                        color: Colors.cyan[400],
+                                        onPressed: () => dialog(),
+                                        child: Row(
+                                          children: <Widget>[
+                                            Text(
+                                                'More',
+                                                style: TextStyle(
+                                                  fontSize: 20.0,
+                                                  fontWeight: FontWeight.bold,
+                                                )
+                                            ),
+                                            Icon(
+                                              Icons.more_vert,
+                                              color: Colors.white,
+                                              size: 20.0,
+                                            ),
+                                          ],
+                                        )),
+                                  ),
+
+                                  //Shanika's part
+                                  //                                  Container(
+
+
+//                                    child: SimpleFoldingCell(
+//                                      key: _foldingCellKey,
+//                                      frontWidget: FrontWidgetHistory(),
+//                                      innerTopWidget: InnerTopWidgetHistory(),
+//                                      innerBottomWidget: InnerBottomWidgetHistory(),
+//
+//                                      cellSize: Size(MediaQuery.of(context).size.width,175),
+//                                      padding: EdgeInsets.all(10.0),
+//
+//                                      onOpen: () => print('cell opened'),
+//                                      onClose: () => print('cell closed'),
+//                                    ),
+//                                  ),
+                                ],
+                              )
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) => const Divider(),
+                      ),
+                    )
+
+
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  dialog() {
+    final children = <Widget>[];
+    for (var i = 0; i < 10; i++) {
+      children.add(new ListTile());
+    }
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius:
+                BorderRadius.circular(20.0)),
+            child: new ListView(
+              children: <Widget>[
+                Container(
+                  height: 550,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text( 'Order Details',
+                            style: TextStyle(
+                              fontSize: 28.0,
+                              color: Colors.blueGrey,) ,
+                        ),
+                        Divider(
+                          height: 10.0,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Text( 'Order Id: #${entries[0]}',
+                                    style: TextStyle( fontSize: 20.0, ) ),
+                                Text( 'Client Name: Mr. Jayantha Pieris',
+                                    style: TextStyle( fontSize: 20.0, ) ),
+                                Text( 'Address: ${address[0]}',
+                                    style: TextStyle( fontSize: 20.0, ) ),
+                                Text( 'Delivery Date: 05/07/2020',
+                                    style: TextStyle( fontSize: 20.0, ) ),
+                                Text( 'Delivery Charges: Rs.260.00',
+                                    style: TextStyle( fontSize: 20.0, ) ),
+                                Text( 'Order Status: Completed',
+                                    style: TextStyle( fontSize: 20.0, ) ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Divider(
+                          height: 30.0,
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: SizedBox(
+                            width: 100.0,
+                            child: RaisedButton(
+                              child: Text("Close"),
+                              onPressed: (){
+                                Navigator.of(context).pop();
+                              },
+                              color: Colors.redAccent,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+
+
+          );
+        });
   }
 Container InnerBottomWidgetOnGoing() {
   return Container(
@@ -306,6 +466,7 @@ Container InnerBottomWidgetOnGoing() {
     ),
   );
 }
+
   Container InnerTopWidget() {
   return Container(
     color: Colors.cyan[400],
@@ -458,6 +619,7 @@ Container InnerBottomWidgetOnGoing() {
 
   );
 }
+
   Container InnerBottomWidget() {
   return Container(
     color: Colors.white,
