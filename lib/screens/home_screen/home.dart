@@ -1,7 +1,13 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:epharma/screens/my_profile/myProfilePage.dart';
 import 'package:folding_cell/folding_cell.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_map/flutter_map.dart';
+
+import 'package:epharma/screens/map/map.dart';
+//import 'package:latlng/latlng.dart';
+//import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
 
 //import 'package:flutter/src/widgets/navigator.dart';
 
@@ -16,6 +22,12 @@ class _HomeScreenState extends State<HomeScreen> {
   final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
   final List<String> entries = <String>['52364', '12445', '97855', '44512'];
   final List<String> address = <String>['Colombo-05', 'Maharagama', 'Dehiwala', 'Ward Place'];
+  Completer<GoogleMapController> _controller = Completer();
+  static const LatLng _center = const LatLng(45.521563, -122.677433);
+
+  void _onMapCreated(GoogleMapController controller) {
+    _controller.complete(controller);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -330,16 +342,40 @@ Container InnerBottomWidgetOnGoing() {
   return Container(
     color: Colors.white,
     alignment: Alignment.bottomCenter,
-    child: Padding(
-      padding: EdgeInsets.only(bottom:10),
-      
-      child: FlatButton(
-        onPressed: () => _foldingCellKey?.currentState?.toggleFold(),
-        child: Text("Start Ride"),
-        textColor: Colors.black,
-        color: Colors.red[300],
-        splashColor: Colors.white.withOpacity(0.5),
-      ), 
+    child: Container(
+      child: Column(
+        children: <Widget>[
+          /*Container(
+            child: new GoogleMap(
+              onMapCreated: _onMapCreated,
+              initialCameraPosition: CameraPosition(
+                target: _center,
+                zoom: 11.0,
+              ),
+            ),
+          ),*/
+            FlatButton(
+              onPressed: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => Map()),
+                );
+              }, 
+              child: Text('Start Ride'),
+              textColor: Colors.black,
+              color: Colors.green[400],
+              splashColor: Colors.white.withOpacity(0.5),
+            ),
+          
+          FlatButton(
+            onPressed: () => _foldingCellKey?.currentState?.toggleFold(),
+            child: Text("Close"),
+            textColor: Colors.black,
+            color: Colors.red[300],
+            splashColor: Colors.white.withOpacity(0.5),
+          ),
+        ],
+      ),
     ),
   );
 }

@@ -5,6 +5,7 @@ import 'package:epharma/screens/splash_screen/splash.dart';
 import 'package:epharma/screens/my_profile/myProfilePage.dart';
 import 'package:epharma/screens/edit_profile/editProfile.dart';
 import 'package:epharma/screens/notification/notification.dart';
+import 'package:epharma/screens/map/map.dart';
 
 class PharmaApp extends StatelessWidget {
   PharmaApp() {
@@ -22,6 +23,7 @@ class PharmaApp extends StatelessWidget {
         '/profile' : (context) => Profile(),
         '/edit' : (context) => EditProfile(),
         '/notification' : (context) => Notification_Tab(),
+        '/map' : (context) => Map(),
       },
     );
   }
