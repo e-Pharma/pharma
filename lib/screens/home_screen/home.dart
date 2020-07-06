@@ -257,10 +257,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   dialog() {
-    final children = <Widget>[];
-    for (var i = 0; i < 10; i++) {
-      children.add(new ListTile());
-    }
+//    final children = <Widget>[];
+//    for (var i = 0; i < 10; i++) {
+//      children.add(new ListTile());
+//    }
     return showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -268,70 +268,66 @@ class _HomeScreenState extends State<HomeScreen> {
             shape: RoundedRectangleBorder(
                 borderRadius:
                 BorderRadius.circular(20.0)),
-            child: new ListView(
-              children: <Widget>[
-                Container(
-                  height: 550,
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+            child: Container(
+              height: 400,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(12.0, 5.0, 12.0, 20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text( 'Order Details',
+                      style: TextStyle(
+                        fontSize: 28.0,
+                        color: Colors.blueGrey,) ,
+                    ),
+                    Divider(
+                      height: 10.0,
+                    ),
+                    Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text( 'Order Details',
-                            style: TextStyle(
-                              fontSize: 28.0,
-                              color: Colors.blueGrey,) ,
-                        ),
-                        Divider(
-                          height: 10.0,
-                        ),
-                        Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Text( 'Order Id: #${entries[0]}',
-                                    style: TextStyle( fontSize: 20.0, ) ),
-                                Text( 'Client Name: Mr. Jayantha Pieris',
-                                    style: TextStyle( fontSize: 20.0, ) ),
-                                Text( 'Address: ${address[0]}',
-                                    style: TextStyle( fontSize: 20.0, ) ),
-                                Text( 'Delivery Date: 05/07/2020',
-                                    style: TextStyle( fontSize: 20.0, ) ),
-                                Text( 'Delivery Charges: Rs.260.00',
-                                    style: TextStyle( fontSize: 20.0, ) ),
-                                Text( 'Order Status: Completed',
-                                    style: TextStyle( fontSize: 20.0, ) ),
-                              ],
-                            ),
+                            Text( 'Order Id: #${entries[0]}',
+                                style: TextStyle( fontSize: 20.0, ) ),
+                            Text( 'Client Name: Mr. Jayantha Pieris',
+                                style: TextStyle( fontSize: 20.0, ) ),
+                            Text( 'Address: ${address[0]}',
+                                style: TextStyle( fontSize: 20.0, ) ),
+                            Text( 'Delivery Date: 05/07/2020',
+                                style: TextStyle( fontSize: 20.0, ) ),
+                            Text( 'Delivery Charges: Rs.260.00',
+                                style: TextStyle( fontSize: 20.0, ) ),
+                            Text( 'Order Status: Completed',
+                                style: TextStyle( fontSize: 20.0, ) ),
                           ],
-                        ),
-                        Divider(
-                          height: 30.0,
-                        ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: SizedBox(
-                            width: 100.0,
-                            child: RaisedButton(
-                              child: Text("Close"),
-                              onPressed: (){
-                                Navigator.of(context).pop();
-                              },
-                              color: Colors.redAccent,
-                            ),
-                          ),
                         ),
                       ],
                     ),
-                  ),
+                    Divider(
+                      height: 30.0,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                        width: 100.0,
+                        child: RaisedButton(
+                          child: Text("Close"),
+                          onPressed: (){
+                            Navigator.of(context).pop();
+                          },
+                          color: Colors.redAccent,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            )
 
 
 

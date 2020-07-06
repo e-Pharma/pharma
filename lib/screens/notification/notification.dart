@@ -6,8 +6,8 @@ class Notification_Tab extends StatefulWidget {
 }
 
 class _Notification_TabState extends State<Notification_Tab> {
-  final List<String> sender = <String>['Pharmacist', 'Admin', 'Client(Order Id:12556)'];
-  final List<String> msg = <String>['You have 15 deliveries tomorrow', 'Check the PENDING orders to accept orders for next day', 'Can you deliver the package after noon?'];
+  final List<String> sender = <String>['Pharmacist', 'Client(Order Id:12556)'];
+  final List<String> msg = <String>['Check the PENDING orders to accept orders for next day', 'Can you deliver the package after noon?'];
 
   @override
   Widget build(BuildContext context) {
