@@ -15,7 +15,7 @@ class AuthService {
     Logger().i('$password');
     Logger().i( 'Uri $baseUrl/auth/driver/login?user_name=$user_name&password=$password');
     return Dio().get(
-      '$baseUrl/auth/driver/login?user_name=$user_name&password=$password',
+      '$baseUrl/driver/login?user_name=$user_name&password=$password',
 
     ).then((res) async {
       Logger().i('$res');
