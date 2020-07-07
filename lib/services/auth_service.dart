@@ -13,7 +13,7 @@ class AuthService {
     driver = user_name;
     Logger().i('$user_name');
     Logger().i('$password');
-    Logger().i( 'Uri $baseUrl/auth/driver/login?user_name=$user_name&password=$password');
+    Logger().i( 'Uri $baseUrl/driver/login?user_name=$user_name&password=$password');
     return Dio().get(
       '$baseUrl/driver/login?user_name=$user_name&password=$password',
 

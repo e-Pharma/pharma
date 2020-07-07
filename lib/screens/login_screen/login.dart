@@ -9,7 +9,6 @@ class StartMenu extends StatefulWidget {
 }
 
 class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
-
   String _user_name, _password;
   static final _formKey = new GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -22,7 +21,7 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
   }
 
   Future _handleLogin(
-      String user_name,
+      String _user_name,
       String _password,
       BuildContext context,
       ) async {
@@ -332,9 +331,20 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
                     ),
                     color: Colors.cyan,
                     onPressed: ()
-                    => _handleLogin('driver', '123', context)
+//                    => _handleLogin(_user_name, _password, context)
+                    {
+                      Navigator.pushNamed(context, '/home');
+                    }
+
 //                    {
-//                      Navigator.pushNamed(context, '/home');
+//                    if (_formKey.currentState.validate()) {
+//                    if (isenabled) {
+//                    isenabled = false;
+//                    _handleLogin(_user_name, _password, context);
+//                    } else {
+//                    return null;
+//                    }
+//                    }
 //                    }
                     ,
                     child: new Container(
