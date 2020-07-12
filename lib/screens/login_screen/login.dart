@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:epharma/services/auth_service.dart';
 import 'package:epharma/routes/application.dart';
+import 'package:epharma/pharma.dart';
 
 class StartMenu extends StatefulWidget {
   @override
@@ -27,7 +28,8 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
       ) async {
     AuthService().login(_user_name, _password).then((res) {
       if (res) {
-        Application.router.navigateTo(context, '/home', clearStack: true);
+        Navigator.pushNamed(context, '/home');
+//        Application.router.navigateTo(context, '/home', clearStack: true);
       } else {
         isenabled = true;
         showDialog(
@@ -168,24 +170,6 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
       body:
       Column(
         children: <Widget>[
-//          Container(
-//            child: SafeArea(
-//              child: Align(
-//                alignment: Alignment.topLeft,
-//                child: FlatButton(
-//                    shape: new RoundedRectangleBorder(
-//                      borderRadius: new BorderRadius.circular(30.0),
-//                    ),
-//                    onPressed: () {
-//                      Navigator.pushNamed(context, '/auth');
-//                    },
-//                    color: Colors.cyan,
-//                    textColor: Colors.white,
-//                    child: Text('Menu')
-//                ),
-//              ),
-//            ),
-//          ),
           Container(
             padding: EdgeInsets.only(top: 100.0),
             child: Center(
@@ -196,49 +180,83 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
               ),
             ),
           ),
-          new Row(
-            children: <Widget>[
-              new Expanded(
-                child: new Padding(
-                  padding: const EdgeInsets.fromLTRB(30.0, 85.0, 0.0, 0.0),
-                  child: new Text(
-                    "EMAIL",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.cyan,
-                      fontSize: 15.0,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
           new Container(
             width: MediaQuery.of(context).size.width,
             margin: const EdgeInsets.only(left: 30.0, right: 40.0, top: 10.0),
             alignment: Alignment.center,
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                    color: Colors.cyan,
-                    width: 0.5,
-                    style: BorderStyle.solid),
-              ),
-            ),
             padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-            child: new Row(
+            child:
+            new Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 new Expanded(
-                  child: TextField(
-                    obscureText: false,
-                    textAlign: TextAlign.left,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: '',
-                      hintStyle: TextStyle(color: Colors.grey),
-                    ),
+                  child: new Padding(
+                      padding: const EdgeInsets.fromLTRB(30.0, 85.0, 0.0, 0.0),
+                      child: new TextFormField(
+                        obscureText: false,
+                        onChanged: (value) {
+                          setState(() {
+                            _user_name = value;
+                          });
+                        },
+                        decoration: new InputDecoration(
+                          labelText: "User Name",
+                          fillColor: Colors.white,
+                          border: new OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(25.0),
+                            borderSide: new BorderSide(),
+                          ),
+                          labelStyle: TextStyle(
+                              color: Colors.cyan,
+                              fontSize: 20.0
+                          ),
+                        ),
+//                    validator: OfficerIDValidator.validate,
+                        keyboardType: TextInputType.text,
+                      )
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          new Container(
+            width: MediaQuery.of(context).size.width,
+            margin: const EdgeInsets.only(left: 30.0, right: 40.0, top: 10.0),
+            alignment: Alignment.center,
+            padding: const EdgeInsets.only(left: 0.0, right: 10.0),
+            child:
+            new Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                new Expanded(
+                  child: new Padding(
+                      padding: const EdgeInsets.fromLTRB(30.0, 10.0, 0.0, 0.0),
+                      child: new TextFormField(
+                        obscureText: true,
+                        onChanged: (value) {
+                          setState(() {
+                            _password = value;
+                          });
+                        },
+                        decoration: new InputDecoration(
+                          labelText: "Password",
+                          fillColor: Colors.white,
+                          border: new OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(25.0),
+                            borderSide: new BorderSide(),
+
+                          ),
+                          labelStyle: TextStyle(
+                              color: Colors.cyan,
+                              fontSize: 20.0
+                          ),
+                        ),
+//                    validator: PasswordValidator.validate,
+                        keyboardType: TextInputType.text,
+                      ),
                   ),
                 ),
               ],
@@ -247,77 +265,26 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
 //          Divider(
 //            height: 10.0,
 //          ),
-          new Row(
-            children: <Widget>[
-              new Expanded(
-                child: new Padding(
-                  padding: const EdgeInsets.only(top:10.0, left: 30.0),
-                  child: new Text(
-                    "PASSWORD",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.cyan,
-                      fontSize: 15.0,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          new Container(
-            width: MediaQuery.of(context).size.width,
-            margin: const EdgeInsets.only(left: 30.0, right: 40.0, top: 10.0),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                    color: Colors.cyan,
-                    width: 0.5,
-                    style: BorderStyle.solid),
-              ),
-            ),
-            padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-            child: new Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                new Expanded(
-                  child: TextField(
-                    obscureText: true,
-                    textAlign: TextAlign.left,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: '',
-                      hintStyle: TextStyle(color: Colors.grey),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-//          Divider(
-//            height: 10.0,
+//          new Row(
+//            mainAxisAlignment: MainAxisAlignment.end,
+//            children: <Widget>[
+//              Padding(
+//                padding: const EdgeInsets.only(right: 20.0),
+//                child: new FlatButton(
+//                  child: new Text(
+//                    "Forgot Password?",
+//                    style: TextStyle(
+//                      fontWeight: FontWeight.bold,
+//                      color: Colors.cyan,
+//                      fontSize: 15.0,
+//                    ),
+//                    textAlign: TextAlign.end,
+//                  ),
+//                  onPressed: () => {},
+//                ),
+//              ),
+//            ],
 //          ),
-          new Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(right: 20.0),
-                child: new FlatButton(
-                  child: new Text(
-                    "Forgot Password?",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.cyan,
-                      fontSize: 15.0,
-                    ),
-                    textAlign: TextAlign.end,
-                  ),
-                  onPressed: () => {},
-                ),
-              ),
-            ],
-          ),
           new Container(
             width: MediaQuery.of(context).size.width,
             margin: const EdgeInsets.only(left: 30.0, right: 30.0, top: 80.0),
@@ -331,23 +298,15 @@ class _StartMenuState extends State<StartMenu> with TickerProviderStateMixin{
                     ),
                     color: Colors.cyan,
                     onPressed: ()
-//                    => _handleLogin(_user_name, _password, context)
                     {
-                      Navigator.pushNamed(context, '/home');
-                    }
-
-//                    {
-//                    if (_formKey.currentState.validate()) {
-//                    if (isenabled) {
-//                    isenabled = false;
-//                    _handleLogin(_user_name, _password, context);
-//                    } else {
-//                    return null;
-//                    }
-//                    }
-//                    }
-                    ,
-                    child: new Container(
+                     if (isenabled) {
+                        isenabled = false;
+                        _handleLogin(_user_name, _password, context);
+                        } else {
+                        return null;
+                      }
+                    },
+                  child: new Container(
                       padding: const EdgeInsets.symmetric(
                         vertical: 20.0,
                         horizontal: 20.0,

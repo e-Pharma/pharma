@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 String driver;
 
 class AuthService {
-  final baseUrl = 'http://localhost:3000';
+  final baseUrl = 'https://e-pharma-server.herokuapp.com';
   Future<bool> login(String user_name, String password){
     print("here");
     driver = user_name;
@@ -32,8 +32,6 @@ class AuthService {
     //BuildContext context;
     await SharedPreferences.getInstance().then((prefs){
       prefs.remove("token");
-
-      //Application.router.navigateTo(context,'/',clearStack: true);
 
     });
 
