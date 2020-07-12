@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:epharma/screens/my_profile/myProfilePage.dart';
+import 'package:epharma/screens/drawer/my_profile/myProfilePage.dart';
 import 'package:folding_cell/folding_cell.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -75,16 +75,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.person,
                   'My Profile',
                   () => {
-                    Navigator.push(
-                      context, 
-                      MaterialPageRoute(builder: (context) => Profile()),
-                    ),
-                  },
+                    Navigator.pushNamed(context, '/profile')},
                 ),
                 CustomListTile(
                   Icons.notifications,
                   'Notifications',
                   () => { Navigator.pushNamed(context, '/notification')},
+                ),
+                CustomListTile(
+                  Icons.location_on,
+                  'Share location',
+                      () => { Navigator.pushNamed(context, '/location') },
                 ),
                 CustomListTile(
                   Icons.settings,

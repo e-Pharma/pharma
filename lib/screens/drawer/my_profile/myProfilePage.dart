@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 //import 'package:pharma/screens/edit_profile/editProfile.dart';
-import 'package:epharma/screens/edit_profile/editProfile.dart';
+import 'package:epharma/screens/drawer/edit_profile/editProfile.dart';
 
 class Profile extends StatefulWidget {
   @override
