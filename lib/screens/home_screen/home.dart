@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'package:epharma/model/order.dart';
+
 import 'package:flutter/material.dart';
 import 'package:epharma/screens/drawer/my_profile/myProfilePage.dart';
 import 'package:folding_cell/folding_cell.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_map/flutter_map.dart';
-
+import 'package:epharma/screens/orders/completedOrders.dart';
 import 'package:epharma/screens/map/map.dart';
 //import 'package:latlng/latlng.dart';
 //import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
@@ -20,8 +22,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
-  final List<String> entries = <String>['52364', '12445', '97855', '44512'];
-  final List<String> address = <String>['Colombo-05', 'Maharagama', 'Dehiwala', 'Ward Place'];
+//  final List<String> entries = <String>['52364', '12445', '97855', '44512'];
+//  final List<String> address = <String>['Colombo-05', 'Maharagama', 'Dehiwala', 'Ward Place'];
   Completer<GoogleMapController> _controller = Completer();
   static const LatLng _center = const LatLng(45.521563, -122.677433);
 
@@ -31,6 +33,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _width = MediaQuery.of(context).size.width;
+    final _height = MediaQuery.of(context).size.height;
+    TextStyle _style() {
+      return TextStyle(
+        //color:
+        fontWeight: FontWeight.bold,
+      );
+    }
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: DefaultTabController(
@@ -172,84 +182,91 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
               ),
-              new Card(
-                color: Color(0xffdfd4f4),
+              CompletedOrders(),
 
-                    child: Container(
-                      child: ListView.separated(
-                        padding: const EdgeInsets.all(8),
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: entries.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-//                            alignment: Alignment.centerLeft,
-                              height: 75,
-                              width: 500,
-                              color: Colors.white,
-                              child: Row(
-                                children: <Widget>[
-                                  Align(
-//                                  alignment: Alignment.center,
-                                    child: Text(
-                                        '   Order Id: #${entries[index]}                    ',
-                                        style: TextStyle(
-                                          fontSize: 20.0,
-                                        )
-                                    ),
-                                  ),
-                                  Container(
-                                    alignment: Alignment.centerRight,
-                                    child: FlatButton(
-                                        padding: EdgeInsets.zero,
-                                        textColor: Colors.white,
-                                        color: Colors.cyan[400],
-                                        onPressed: () => dialog(),
-                                        child: Row(
-                                          children: <Widget>[
-                                            Text(
-                                                'More',
-                                                style: TextStyle(
-                                                  fontSize: 20.0,
-                                                  fontWeight: FontWeight.bold,
-                                                )
-                                            ),
-                                            Icon(
-                                              Icons.more_vert,
-                                              color: Colors.white,
-                                              size: 20.0,
-                                            ),
-                                          ],
-                                        )),
-                                  ),
+//                new Card(
+//                color: Color(0xffdfd4f4),
 
-                                  //Shanika's part
-                                  //                                  Container(
-
-
-//                                    child: SimpleFoldingCell(
-//                                      key: _foldingCellKey,
-//                                      frontWidget: FrontWidgetHistory(),
-//                                      innerTopWidget: InnerTopWidgetHistory(),
-//                                      innerBottomWidget: InnerBottomWidgetHistory(),
-//
-//                                      cellSize: Size(MediaQuery.of(context).size.width,175),
-//                                      padding: EdgeInsets.all(10.0),
-//
-//                                      onOpen: () => print('cell opened'),
-//                                      onClose: () => print('cell closed'),
+                // Oshi order history prev,
+//                    child: Container(
+//                      child:
+//                      ListView.separated(
+//                        padding: const EdgeInsets.all(8),
+//                        scrollDirection: Axis.vertical,
+//                        shrinkWrap: true,
+//                        itemCount: entries.length,
+//                        itemBuilder: (BuildContext context, int index) {
+//                          return Container(
+////                            alignment: Alignment.centerLeft,
+//                              height: 75,
+//                              width: 500,
+//                              color: Colors.white,
+//                              child: Row(
+//                                children: <Widget>[
+//                                  Align(
+////                                  alignment: Alignment.center,
+//                                    child: Text(
+//                                        '   Order Id: #${entries[index]}                    ',
+//                                        style: TextStyle(
+//                                          fontSize: 20.0,
+//                                        )
 //                                    ),
 //                                  ),
-                                ],
-                              )
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) => const Divider(),
-                      ),
-                    )
+//
+//
+//
+//
+//                                  Container(
+//                                    alignment: Alignment.centerRight,
+//                                    child: FlatButton(
+//                                        padding: EdgeInsets.zero,
+//                                        textColor: Colors.white,
+//                                        color: Colors.cyan[400],
+//                                        onPressed: () => dialog(),
+//                                        child: Row(
+//                                          children: <Widget>[
+//                                            Text(
+//                                                'More',
+//                                                style: TextStyle(
+//                                                  fontSize: 20.0,
+//                                                  fontWeight: FontWeight.bold,
+//                                                )
+//                                            ),
+//                                            Icon(
+//                                              Icons.more_vert,
+//                                              color: Colors.white,
+//                                              size: 20.0,
+//                                            ),
+//                                          ],
+//                                        )),
+//                                  ),
+//
+//                                  //Shanika's part
+//                                  //                                  Container(
+//
+//
+////                                    child: SimpleFoldingCell(
+////                                      key: _foldingCellKey,
+////                                      frontWidget: FrontWidgetHistory(),
+////                                      innerTopWidget: InnerTopWidgetHistory(),
+////                                      innerBottomWidget: InnerBottomWidgetHistory(),
+////
+////                                      cellSize: Size(MediaQuery.of(context).size.width,175),
+////                                      padding: EdgeInsets.all(10.0),
+////
+////                                      onOpen: () => print('cell opened'),
+////                                      onClose: () => print('cell closed'),
+////                                    ),
+////                                  ),
+//                                ],
+//                              )
+//                          );
+//                        },
+//                        separatorBuilder: (BuildContext context, int index) => const Divider(),
+//                      ),
+//                    )
+//      ),
 
-
-              ),
             ],
           ),
         ),
@@ -293,12 +310,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            Text( 'Order Id: #${entries[0]}',
-                                style: TextStyle( fontSize: 20.0, ) ),
-                            Text( 'Client Name: Mr. Jayantha Pieris',
-                                style: TextStyle( fontSize: 20.0, ) ),
-                            Text( 'Address: ${address[0]}',
-                                style: TextStyle( fontSize: 20.0, ) ),
+//                            Text( 'Order Id: #${entries[0]}',
+//                                style: TextStyle( fontSize: 20.0, ) ),
+//                            Text( 'Client Name: Mr. Jayantha Pieris',
+//                                style: TextStyle( fontSize: 20.0, ) ),
+//                            Text( 'Address: ${address[0]}',
+//                                style: TextStyle( fontSize: 20.0, ) ),
                             Text( 'Delivery Date: 05/07/2020',
                                 style: TextStyle( fontSize: 20.0, ) ),
                             Text( 'Delivery Charges: Rs.260.00',

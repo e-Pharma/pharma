@@ -9,7 +9,6 @@ String driver;
 class AuthService {
   final baseUrl = 'https://e-pharma-server.herokuapp.com';
   Future<bool> login(String user_name, String password){
-    print("here");
     driver = user_name;
     Logger().i('$user_name');
     Logger().i('$password');
