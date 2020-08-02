@@ -17,7 +17,7 @@ class PharmaApp extends StatelessWidget {
     return MaterialApp(
       title: "Pharma",
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: '/edit',
       routes: {
         '/': (context) => SplashScreen(),
         '/auth': (context) => StartMenu(),

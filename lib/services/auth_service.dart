@@ -55,4 +55,13 @@ class AuthService {
         .catchError((error) => Logger().e(error));
   }
 
+  //Future<bool> getProfileData(){
+  //   PrefService()
+  //       .getToken()
+  //       .then((token) =>{
+  //       Dio().get((baseUrl+"/getProfile/"+token.id)).then((value) => print(value)).catchError(onError=>print(onError))
+  //       })
+  //       .catchError((error) => Logger().e(error));
+  // }
+
 }

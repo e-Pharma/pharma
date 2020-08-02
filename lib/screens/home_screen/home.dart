@@ -17,7 +17,6 @@ class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
   final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
-
 }
 
 class _HomeScreenState extends State<HomeScreen> {
