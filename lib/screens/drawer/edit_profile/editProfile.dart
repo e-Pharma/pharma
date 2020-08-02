@@ -1,6 +1,14 @@
+//import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:http/http.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:corsac_jwt/corsac_jwt.dart';
+import 'package:pattern_formatter/pattern_formatter.dart';
 
 class EditProfile extends StatefulWidget {
   @override
@@ -9,7 +17,32 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   //create a variable of type File
+  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   File _image;
+  String token;
+  Map driverData;
+  Future<void> getData() async {
+    await SharedPreferences.getInstance().then((prefs){
+      token=prefs.getString("token");
+
+    });
+    var decodedToken = new JWT.parse(token);
+    print(decodedToken.claims['id']);
+
+    Response response=await get('https://e-pharma-server.herokuapp.com/driver/get/'+decodedToken.claims['id']);
+    print(response.body);
+    setState(() {
+      driverData=jsonDecode(response.body)['data'];
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    this.getData();
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -78,167 +111,153 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                 ],
               ),
+
+              // SafeArea(
+              //   top: false,
+              //   bottom: false,
+              //   child: new Form(
+              //     key: _formKey,
+              //     autovalidate: true,
+              //     child: new ListView(
+              //       padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              //       children: <Widget>[
+              //         new TextFormField(
+              //           decoration: const InputDecoration(
+              //             icon: const Icon(Icons.person),
+              //             hintText: 'Enter your name',
+              //             labelText: 'Name',
+              //           ),
+              //         ),
+              //         new TextFormField(
+              //           decoration: const InputDecoration(
+              //             icon: const Icon(Icons.phone),
+              //             hintText: 'Enter email',
+              //             labelText: 'Email',
+              //           ),
+              //           keyboardType: TextInputType.emailAddress,
+              //           // inputFormatters: [
+              //           //   WhitelistingTextInputFormatter.digitsOnly,
+              //           // ],
+              //         ),
+              //       ],
+              //     ), 
+              //     ),
+                
+              //   ),
               
-              Container(
-                margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget> [
-                    Text(
-                      'Username',
-                      style: TextStyle(
-                        color: Colors.blueGrey,
-                        fontSize: 18.0,
-                      ),
-                    ),
-                    SizedBox(width: 20.0),
-                    Text(
-                      'Michael',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Align(
-                    alignment: Alignment.centerRight,
-                    child: Container(
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.create,
-                          size: 20.0,
-                          color: Colors.blueGrey,
-                        ), 
-                        onPressed: (){},
-                      ),
-                    ),
-                  ),
-                  ],
-                ),
-              ),
-              /*Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      child: Column(
-                        children: <Widget>[
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Username',
-                              style: TextStyle(
-                                color: Colors.blueGrey,
-                                fontSize:18.0,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'K.D.S.L.Waidyarathne',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Container(
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.create,
-                          size: 20.0,
-                          color: Colors.blueGrey,
-                        ), 
-                        onPressed: (){},
-                      ),
-                    ),
-                  ),
-                ],
-              ),*/
+              // Container(
+              //   margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     children: <Widget> [
+              //       Text(
+              //         'Username',
+              //         style: TextStyle(
+              //           color: Colors.blueGrey,
+              //           fontSize: 18.0,
+              //         ),
+              //       ),
+              //       SizedBox(width: 20.0),
+              //       Text(
+              //         driverData['user_name'],
+              //         style: TextStyle(
+              //           color: Colors.black,
+              //           fontSize: 20.0,
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //       ),
+              //       Align(
+              //       alignment: Alignment.centerRight,
+              //       child: Container(
+              //         child: IconButton(
+              //           icon: Icon(
+              //             Icons.create,
+              //             size: 20.0,
+              //             color: Colors.blueGrey,
+              //           ), 
+              //           onPressed: (){},
+              //         ),
+              //       ),
+              //     ),
+              //     ],
+              //   ),
+              // ),
               
-              Container(
-                margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget> [
-                    Text(
-                      'Phone',
-                      style: TextStyle(
-                        color: Colors.blueGrey,
-                        fontSize: 18.0,
-                      ),
-                    ),
-                    SizedBox(width: 20.0),
-                    Text(
-                      '0716009027',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Align(
-                    alignment: Alignment.centerRight,
-                    child: Container(
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.create,
-                          size: 20.0,
-                          color: Colors.blueGrey,
-                        ), 
-                        onPressed: (){},
-                      ),
-                    ),
-                  ),
-                  ],
-                ),
-              ),
+              // Container(
+              //   margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     children: <Widget> [
+              //       Text(
+              //         'Phone',
+              //         style: TextStyle(
+              //           color: Colors.blueGrey,
+              //           fontSize: 18.0,
+              //         ),
+              //       ),
+              //       SizedBox(width: 20.0),
+              //       Text(
+              //         driverData['phone'],
+              //         style: TextStyle(
+              //           color: Colors.black,
+              //           fontSize: 20.0,
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //       ),
+              //       Align(
+              //       alignment: Alignment.centerRight,
+              //       child: Container(
+              //         child: IconButton(
+              //           icon: Icon(
+              //             Icons.create,
+              //             size: 20.0,
+              //             color: Colors.blueGrey,
+              //           ), 
+              //           onPressed: (){},
+              //         ),
+              //       ),
+              //     ),
+              //     ],
+              //   ),
+              // ),
              
-              Container(
-                margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget> [
-                    Text(
-                      'Address',
-                      style: TextStyle(
-                        color: Colors.blueGrey,
-                        fontSize: 18.0,
-                      ),
-                    ),
-                    SizedBox(width: 20.0),
-                    Text(
-                      'Colombo',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Align(
-                    alignment: Alignment.centerRight,
-                    child: Container(
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.create,
-                          size: 20.0,
-                          color: Colors.blueGrey,
-                        ), 
-                        onPressed: (){},
-                      ),
-                    ),
-                  ),
-                  ],
-                ),
-              ),
+              // Container(
+              //   margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     children: <Widget> [
+              //       Text(
+              //         'Address',
+              //         style: TextStyle(
+              //           color: Colors.blueGrey,
+              //           fontSize: 18.0,
+              //         ),
+              //       ),
+              //       SizedBox(width: 20.0),
+              //       Text(
+              //         driverData['address'],
+              //         style: TextStyle(
+              //           color: Colors.black,
+              //           fontSize: 20.0,
+              //           fontWeight: FontWeight.bold,
+              //         ),
+              //       ),
+              //       Align(
+              //       alignment: Alignment.centerRight,
+              //       child: Container(
+              //         child: IconButton(
+              //           icon: Icon(
+              //             Icons.create,
+              //             size: 20.0,
+              //             color: Colors.blueGrey,
+              //           ), 
+              //           onPressed: (){},
+              //         ),
+              //       ),
+              //     ),
+              //     ],
+              //   ),
+              // ),
              
               Container(
                 margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -254,7 +273,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     SizedBox(width: 20.0),
                     Text(
-                      'michael89@gmail.com',
+                      driverData['email'],
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 20.0,

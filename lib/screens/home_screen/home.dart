@@ -15,7 +15,6 @@ class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
   final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
-
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -183,14 +182,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemCount: entries.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Container(
-//                            alignment: Alignment.centerLeft,
+                            //alignment: Alignment.centerLeft,
                               height: 75,
                               width: 500,
                               color: Colors.white,
                               child: Row(
                                 children: <Widget>[
                                   Align(
-//                                  alignment: Alignment.center,
+                                  //alignment: Alignment.center,
                                     child: Text(
                                         '   Order Id: #${entries[index]}                    ',
                                         style: TextStyle(
