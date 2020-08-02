@@ -41,6 +41,12 @@ class _ShareLocationState extends State<ShareLocation> {
               },
               color: Colors.cyan[100],
             ),
+            FlatButton(
+              child: Text("Go to Map"),
+              onPressed: (){
+                Navigator.pushNamed(context, "/currentlocation");
+              },
+            ),
           ],
         ),
       ),
