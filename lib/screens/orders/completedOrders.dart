@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
-import 'package:epharma/services/order_service.dart';
+import 'package:epharma/model/order.dart';
+// import 'package:epharma/services/order_service.dart';
 import 'dart:convert';
 
 class CompletedOrders extends StatefulWidget {
@@ -10,44 +12,80 @@ class CompletedOrders extends StatefulWidget {
 }
 
 class _CompletedOrdersState extends State<CompletedOrders> {
-  Future <List<Order>> _getOrderData() async {
-    var orderData= await http.get("https://e-pharma-server.herokuapp.com/admin/orders?value=pending");
-    var jsonData= json.Decode(orderData.body);
+    
     List<Order> orders = [];
-    for (var ord in jsonData)
+  Future <void> _getOrderData() async {
+    var orderData= await http.get("https://e-pharma-server.herokuapp.com/admin/orders?value=completed");
+    var jsonData= json.decode(orderData.body);
+    // print(jsonData);
+    List<Order> temp = [];
+
+    for (var ord in jsonData['data'])
     {
-      Order order= Order (ord["name"]);
-      orders.add(order);
+      // print(ord);
+
+      // print(ord);
+      // Order order= new Order ( ord["name"], ord["contact"], ord["delivery_address"], ord["prescription_url"]);
+      Order order= new Order (ord["id"], ord["clientId"], ord["name"], ord["delivery_address"],  ord["email"], ord["patient"], ord["contact"],  ord["nic"],  ord["ordered_at"], ord["delivery_charges"], ord["full_amount"],  ord["prescription_url"]);
+      temp.add(order);
     }
-    return orders;
+    setState(() {
+      orders=temp;
+    });
+    print(orders);
+    // return orders;
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getOrderData();
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-        child: FutureBuilder(
-          future: _getOrderData(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.data== null){
-              return Container(
-                child: Center(
-                  Text("Loading...."),
-                ),
-              )
-            }
-            else{
-              return ListView.builder(
-                itemCount: snapshot.data.length,
-                itemNuilder(BuildContext context, int index){
-              return ListTile(
-              title: Text (snapshot.data.name),
-              );
-              },
-              );
-            }
-          },
-        ),
+        child:orders.length==0?SpinKitChasingDots(color: Colors.black,):
+        ListView.builder(
+          itemCount: orders.length,
+          itemBuilder:(context,index){
+            return ListTile(
+              leading: CircleAvatar(
+                        backgroundImage: NetworkImage(orders[index].prescription_url),
+                      ),
+                    title: Text (orders[index].name.toString()),
+                    subtitle: Text (orders[index].delivery_address.toString()),
+                    trailing: Text (orders[index].contact.toString()),
+                    onTap: () {},
+                  );
+
+        })
+//          FutureBuilder(
+//           future: _getOrderData(),
+//           builder: (BuildContext context, AsyncSnapshot snapshot) {
+//             if (snapshot.data== null){
+//               return Container(
+//                 child: Center(
+//                   child: Text("Loading...."),
+//                 ),
+//               );
+//             }
+//             else{
+//               return ListView.builder(
+//                 itemCount: snapshot.data.length,
+//                 itemBuilder: (BuildContext context, int index) {
+//                   return ListTile(
+//                     title: Text (snapshot.data[index].name.toString()),
+//                   //  title: Text (snapshot.data[index].title),
+// //                    subtitle: Text(snapshot.data[index].title),
+//                   );
+//                 },
+//               );
+//             }
+//           },
+//         ),
       ),
     );
   }

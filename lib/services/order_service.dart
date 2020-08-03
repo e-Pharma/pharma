@@ -1,18 +1,36 @@
-//import 'dart:io';
-//
-//import 'package:dio/dio.dart';
-//import 'package:epharma/services/pref_service.dart';
-//import 'package:epharma/config/config.dart';
-//import 'package:epharma/model/order.dart';
-//import 'package:logger/logger.dart';
-//import 'package:shared_preferences/shared_preferences.dart';
-
 class Order {
   final String name;
-  final String thumbnailUrl;
+  final String contact;
+  final String delivery_address;
+  final String prescription_url;
 
-  Order(this.name, this.thumbnailUrl);
+  Order(this.name, this.contact, this.delivery_address, this.prescription_url);
+  // final String id,
+  //     clientId,
+  //     name,
+  //     delivery_address,
+  //     email,
+  //     patient,
+  //     contact,
+  //     nic,
+  //     ordered_at,
+  //     delivery_charges,
+  //     full_amount,
+  //     prescription_url;
 
+  // Order(
+  //     this.id,
+  //       this.clientId,
+  //       this.name,
+  //       this.delivery_address,
+  //       this.email,
+  //       this.patient,
+  //       this.contact,
+  //       this.nic,
+  //       this.ordered_at,
+  //       this.delivery_charges,
+  //       this.full_amount,
+  //       this.prescription_url);
 }
 
 
