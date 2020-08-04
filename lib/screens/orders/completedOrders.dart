@@ -21,13 +21,13 @@ class _CompletedOrdersState extends State<CompletedOrders> {
     List<Order> temp = [];
 
     for (var ord in jsonData['data'])
-    {
+    { 
       // print(ord);
 
       // print(ord);
       // Order order= new Order ( ord["name"], ord["contact"], ord["delivery_address"], ord["prescription_url"]);
-      Order order= new Order (ord["id"], ord["clientId"], ord["name"], ord["delivery_address"],  ord["email"], ord["patient"], ord["contact"],  ord["nic"],  ord["ordered_at"], ord["delivery_charges"], ord["full_amount"],  ord["prescription_url"]);
-      temp.add(order);
+      // Order order= new Order(ord["id"], ord["clientId"], ord["name"], ord["delivery_address"],  ord["email"], ord["patient"], ord["contact"],  ord["nic"],  ord["ordered_at"], ord["delivery_charges"], ord["full_amount"],  ord["prescription_url"]);
+      // temp.add(order);
     }
     setState(() {
       orders=temp;

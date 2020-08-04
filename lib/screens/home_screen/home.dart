@@ -26,6 +26,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Completer<GoogleMapController> _controller = Completer();
   static const LatLng _center = const LatLng(45.521563, -122.677433);
 
+  //kd
+  // String token;
+  // Map orderData;
+  // Future getData()
+
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
   }
@@ -143,18 +148,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     scrollDirection: Axis.vertical,
                     children: <Widget> [
                       Container(
-                        child: SimpleFoldingCell(
-                          key: _foldingCellKey,
-                          frontWidget: FrontWidget(), 
-                          innerTopWidget: InnerTopWidget(), 
-                          innerBottomWidget: InnerBottomWidget(),
+                        // child: SimpleFoldingCell(
+                        //   key: _foldingCellKey,
+                        //   frontWidget: FrontWidget(), 
+                        //   innerTopWidget: InnerTopWidget(), 
+                        //   innerBottomWidget: InnerBottomWidget(),
                                                   
-                          cellSize: Size(MediaQuery.of(context).size.width,175),
-                          padding: EdgeInsets.all(10.0),
+                        //   cellSize: Size(MediaQuery.of(context).size.width,175),
+                        //   padding: EdgeInsets.all(10.0),
 
-                          onOpen: () => print('cell opened'),
-                          onClose: () => print('cell closed'),
-                        ),
+                        //   onOpen: () => print('cell opened'),
+                        //   onClose: () => print('cell closed'),
+                        // ),
+
                       ),
                     ],
                   ),
