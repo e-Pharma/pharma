@@ -60,7 +60,6 @@ class _EditProfileState extends State<EditProfile> {
   //Driver driver = new Driver();
 
   editDriver() async {
-    
     // TODO: implemebt post
 
     final FormState form = _formKey.currentState;
@@ -84,27 +83,24 @@ class _EditProfileState extends State<EditProfile> {
             decodedToken.claims['id'],
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          
         },
         body: jsonEncode(<String, String>{
-      'user_name': user_name,
-      'address': address,
-      'phone': phone
-    }),
+          'user_name': user_name,
+          'address': address,
+          'phone': phone
+        }),
       );
 
-      if(response.statusCode == 202){
+      if (response.statusCode == 202) {
         print("success");
-         return Get.snackbar("Successs", "Driver details updated",
-          duration: Duration(milliseconds: 200),
-          backgroundColor: Colors.white,
-          icon: Icon(
-            Icons.error,
-            color: Colors.red,
-          ));
-
-      }
-      else{
+        return Get.snackbar("Successs", "Driver details updated",
+            duration: Duration(milliseconds: 200),
+            backgroundColor: Colors.white,
+            icon: Icon(
+              Icons.error,
+              color: Colors.red,
+            ));
+      } else {
         print("error");
       }
     }

@@ -1,5 +1,5 @@
 class Order {
-   String id,
+  String id,
       clientId,
       name,
       delivery_address,
@@ -14,17 +14,17 @@ class Order {
 
   Order(
       {this.id,
-        this.clientId,
-        this.name,
-        this.delivery_address,
-        this.email,
-        this.patient,
-        this.contact,
-        this.nic,
-        this.ordered_at,
-        this.delivery_charges,
-        this.full_amount,
-        this.prescription_url});
+      this.clientId,
+      this.name,
+      this.delivery_address,
+      this.email,
+      this.patient,
+      this.contact,
+      this.nic,
+      this.ordered_at,
+      this.delivery_charges,
+      this.full_amount,
+      this.prescription_url});
 
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
