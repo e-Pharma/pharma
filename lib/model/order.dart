@@ -1,5 +1,5 @@
 class Order {
-  final String id,
+  String id,
       clientId,
       name,
       delivery_address,

@@ -8,6 +8,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:epharma/screens/orders/completedOrders.dart';
 import 'package:epharma/screens/map/map.dart';
+import 'package:epharma/screens/orders/pendingOrders.dart';
+import 'package:epharma/screens/orders/ongoingOrders.dart';
+
 //import 'package:latlng/latlng.dart';
 //import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
 
@@ -26,6 +29,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Completer<GoogleMapController> _controller = Completer();
   static const LatLng _center = const LatLng(45.521563, -122.677433);
 
+  //kd
+  // String token;
+  // Map orderData;
+  // Future getData()
+
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
   }
@@ -40,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
         fontWeight: FontWeight.bold,
       );
     }
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: DefaultTabController(
@@ -48,11 +57,11 @@ class _HomeScreenState extends State<HomeScreen> {
           drawer: Drawer(
             child: ListView(
               padding: EdgeInsets.zero,
-              children: <Widget> [
+              children: <Widget>[
                 DrawerHeader(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: <Color> [
+                      colors: <Color>[
                         Colors.cyan[200],
                         Colors.cyan[600],
                       ],
@@ -60,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: Container(
                     child: Column(
-                      children: <Widget> [
+                      children: <Widget>[
                         CircleAvatar(
                           radius: 50.0,
                           backgroundImage: AssetImage('images/driver.jpg'),
@@ -79,22 +88,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                
                 CustomListTile(
                   Icons.person,
                   'My Profile',
-                  () => {
-                    Navigator.pushNamed(context, '/profile')},
+                  () => {Navigator.pushNamed(context, '/profile')},
                 ),
                 CustomListTile(
                   Icons.notifications,
                   'Notifications',
-                  () => { Navigator.pushNamed(context, '/notification')},
+                  () => {Navigator.pushNamed(context, '/notification')},
                 ),
                 CustomListTile(
                   Icons.location_on,
                   'Share location',
-                      () => { Navigator.pushNamed(context, '/location') },
+                  () => {Navigator.pushNamed(context, '/location')},
                 ),
                 CustomListTile(
                   Icons.settings,
@@ -106,7 +113,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   'Log Out',
                   () => {},
                 ),
-        
               ],
             ),
           ),
@@ -133,60 +139,61 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text('HISTORY'),
                 ),
               ],
-              ),
             ),
-            body: TabBarView(
-              children: [
-                new Card(
-                  color: Color(0xffdfd4f4),
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: <Widget> [
-                      Container(
-                        child: SimpleFoldingCell(
-                          key: _foldingCellKey,
-                          frontWidget: FrontWidget(), 
-                          innerTopWidget: InnerTopWidget(), 
-                          innerBottomWidget: InnerBottomWidget(),
-                                                  
-                          cellSize: Size(MediaQuery.of(context).size.width,175),
-                          padding: EdgeInsets.all(10.0),
+          ),
+          body: TabBarView(
+            children: [
+              // new Card(
+              //   color: Color(0xffdfd4f4),
+              //   child: ListView(
+              //     scrollDirection: Axis.vertical,
+              //     children: <Widget>[
+              //       // Container(
+              //       //     // child: SimpleFoldingCell(
+              //       //     //   key: _foldingCellKey,
+              //       //     //   frontWidget: FrontWidget(),
+              //       //     //   innerTopWidget: InnerTopWidget(),
+              //       //     //   innerBottomWidget: InnerBottomWidget(),
 
-                          onOpen: () => print('cell opened'),
-                          onClose: () => print('cell closed'),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              new Card(
-                color: Color(0xffdfd4f4),
-                child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: <Widget> [
-                      Container(
-                        child: SimpleFoldingCell(
-                          key: _foldingCellKey,
-                          frontWidget: FrontWidget(), 
-                          innerTopWidget: InnerTopWidget(), 
-                          innerBottomWidget: InnerBottomWidgetOnGoing(),
-                                                  
-                          cellSize: Size(MediaQuery.of(context).size.width,175),
-                          padding: EdgeInsets.all(10.0),
+              //       //     //   cellSize: Size(MediaQuery.of(context).size.width,175),
+              //       //     //   padding: EdgeInsets.all(10.0),
 
-                          onOpen: () => print('cell opened'),
-                          onClose: () => print('cell closed'),
-                        ),
-                      ),
-                    ],
-                  ),
-              ),
+              //       //     //   onOpen: () => print('cell opened'),
+              //       //     //   onClose: () => print('cell closed'),
+              //       //     // ),
+
+              //       //     ),
+              //     ],
+              //   ),
+              // ),
+              // new Card(
+              //   color: Color(0xffdfd4f4),
+              //   child: ListView(
+              //     scrollDirection: Axis.vertical,
+              //     children: <Widget>[
+              //       Container(
+              //         child: SimpleFoldingCell(
+              //           key: _foldingCellKey,
+              //           frontWidget: FrontWidget(),
+              //           innerTopWidget: InnerTopWidget(),
+              //           innerBottomWidget: InnerBottomWidgetOnGoing(),
+              //           cellSize: Size(MediaQuery.of(context).size.width, 175),
+              //           padding: EdgeInsets.all(10.0),
+              //           onOpen: () => print('cell opened'),
+              //           onClose: () => print('cell closed'),
+              //         ), //
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              PendingOrders(),
+              OngoingOrders(),
               CompletedOrders(),
 
 //                new Card(
 //                color: Color(0xffdfd4f4),
 
-                // Oshi order history prev,
+              // Oshi order history prev,
 //                    child: Container(
 //                      child:
 //                      ListView.separated(
@@ -265,7 +272,6 @@ class _HomeScreenState extends State<HomeScreen> {
 //                      ),
 //                    )
 //      ),
-
             ],
           ),
         ),
@@ -282,83 +288,87 @@ class _HomeScreenState extends State<HomeScreen> {
         context: context,
         builder: (BuildContext context) {
           return Dialog(
-            shape: RoundedRectangleBorder(
-                borderRadius:
-                BorderRadius.circular(20.0)),
-            child: Container(
-              height: 400,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(12.0, 5.0, 12.0, 20.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text( 'Order Details',
-                      style: TextStyle(
-                        fontSize: 28.0,
-                        color: Colors.blueGrey,) ,
-                    ),
-                    Divider(
-                      height: 10.0,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)),
+              child: Container(
+                height: 400,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(12.0, 5.0, 12.0, 20.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Order Details',
+                        style: TextStyle(
+                          fontSize: 28.0,
+                          color: Colors.blueGrey,
+                        ),
+                      ),
+                      Divider(
+                        height: 10.0,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
 //                            Text( 'Order Id: #${entries[0]}',
 //                                style: TextStyle( fontSize: 20.0, ) ),
 //                            Text( 'Client Name: Mr. Jayantha Pieris',
 //                                style: TextStyle( fontSize: 20.0, ) ),
 //                            Text( 'Address: ${address[0]}',
 //                                style: TextStyle( fontSize: 20.0, ) ),
-                            Text( 'Delivery Date: 05/07/2020',
-                                style: TextStyle( fontSize: 20.0, ) ),
-                            Text( 'Delivery Charges: Rs.260.00',
-                                style: TextStyle( fontSize: 20.0, ) ),
-                            Text( 'Order Status: Completed',
-                                style: TextStyle( fontSize: 20.0, ) ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Divider(
-                      height: 30.0,
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: SizedBox(
-                        width: 100.0,
-                        child: RaisedButton(
-                          child: Text("Close"),
-                          onPressed: (){
-                            Navigator.of(context).pop();
-                          },
-                          color: Colors.redAccent,
+                              Text('Delivery Date: 05/07/2020',
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                  )),
+                              Text('Delivery Charges: Rs.260.00',
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                  )),
+                              Text('Order Status: Completed',
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                  )),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Divider(
+                        height: 30.0,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: SizedBox(
+                          width: 100.0,
+                          child: RaisedButton(
+                            child: Text("Close"),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            color: Colors.redAccent,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            )
-
-
-
-          );
+              ));
         });
   }
-Container InnerBottomWidgetOnGoing() {
-  return Container(
-    color: Colors.white,
-    alignment: Alignment.bottomCenter,
-    child: Container(
-      child: Column(
-        children: <Widget>[
-          /*Container(
+
+  Container InnerBottomWidgetOnGoing() {
+    return Container(
+      color: Colors.white,
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            /*Container(
             child: new GoogleMap(
               onMapCreated: _onMapCreated,
               initialCameraPosition: CameraPosition(
@@ -370,178 +380,175 @@ Container InnerBottomWidgetOnGoing() {
             FlatButton(
               onPressed: () {
                 Navigator.push(
-                  context, 
+                  context,
                   MaterialPageRoute(builder: (context) => Map()),
                 );
-              }, 
+              },
               child: Text('Start Ride'),
               textColor: Colors.black,
               color: Colors.green[400],
               splashColor: Colors.white.withOpacity(0.5),
             ),
-          
-          FlatButton(
-            onPressed: () => _foldingCellKey?.currentState?.toggleFold(),
-            child: Text("Close"),
-            textColor: Colors.black,
-            color: Colors.red[300],
-            splashColor: Colors.white.withOpacity(0.5),
-          ),
-        ],
+            FlatButton(
+              onPressed: () => _foldingCellKey?.currentState?.toggleFold(),
+              child: Text("Close"),
+              textColor: Colors.black,
+              color: Colors.red[300],
+              splashColor: Colors.white.withOpacity(0.5),
+            ),
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   Container FrontWidget() {
-  return Container(
-    color: Color(0xffdfd4f4),
-    alignment: Alignment.center,
-    child: Row(
-      children: <Widget> [
-        
-        Expanded(
-          flex: 1,
-          child: Container(
-            decoration: new BoxDecoration (
-              borderRadius: BorderRadius.circular(10.0),
-              color: Colors.cyan[400],
-            ),
+    return Container(
+      color: Color(0xffdfd4f4),
+      alignment: Alignment.center,
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            flex: 1,
             child: Container(
-              child: Row(
+              decoration: new BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: Colors.cyan[400],
+              ),
+              child: Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Order No:',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              '1',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: Colors.white,
+              ),
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Order No:',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.0,
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Order Id : #12569',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.room,
+                              color: Colors.black,
+                              size: 20.0,
                             ),
                           ),
                         ),
-                      ),
-                      Container(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            '1',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.0,
+                        Container(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Gangodawila, Nugegoda',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: FlatButton(
+                      onPressed: () =>
+                          _foldingCellKey?.currentState?.toggleFold(),
+                      child: Text("Open"),
+                      textColor: Colors.black,
+                      color: Colors.cyan[400],
+                      splashColor: Colors.white.withOpacity(0.5),
+                    ),
                   ),
                 ],
               ),
             ),
           ),
-        ),
-
-        Expanded(
-          flex: 2,
-          child: Container(
-            decoration: BoxDecoration (
-              borderRadius: BorderRadius.circular(10.0),
-              color: Colors.white,
-            ),
-
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget> [
-                Container(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Order Id : #12569',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize:20.0,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  child: Row(
-                    children: <Widget> [
-                      Container(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.room,
-                            color: Colors.black,
-                            size: 20.0,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Gangodawila, Nugegoda',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  child: FlatButton(
-                    onPressed: () => _foldingCellKey?.currentState?.toggleFold(),
-                    child: Text("Open"),
-                    textColor: Colors.black,
-                    color: Colors.cyan[400],
-                    splashColor: Colors.white.withOpacity(0.5),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
-}
+        ],
+      ),
+    );
+  }
 
   Container InnerTopWidget() {
-  return Container(
-    color: Colors.cyan[400],
-    alignment: Alignment.center,
-    child: Container(
-      child: Column(
-        children: <Widget>[
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "Order Details",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold,
+    return Container(
+      color: Colors.cyan[400],
+      alignment: Alignment.center,
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Order Details",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 22.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
-          ),
-          Container(
-            child: Row(
-              children: <Widget> [
-                Container(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 5, 5, 5),
+            Container(
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 5, 5, 5),
                       child: Icon(
                         Icons.account_circle,
                         color: Colors.black,
@@ -552,25 +559,25 @@ Container InnerBottomWidgetOnGoing() {
                   Container(
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          'Mr.Joseph',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      child: Text(
+                        'Mr.Joseph',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
                         ),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Container(
-            child: Row(
-              children: <Widget> [
-                Container(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 5, 5, 5),
+            Container(
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 5, 5, 5),
                       child: Icon(
                         Icons.call,
                         color: Colors.black,
@@ -581,25 +588,25 @@ Container InnerBottomWidgetOnGoing() {
                   Container(
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          '0712282935',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      child: Text(
+                        '0712282935',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
                         ),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Container(
-            child: Row(
-              children: <Widget> [
-                Container(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 5, 5, 5),
+            Container(
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 5, 5, 5),
                       child: Icon(
                         Icons.today,
                         color: Colors.black,
@@ -610,25 +617,25 @@ Container InnerBottomWidgetOnGoing() {
                   Container(
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          '8-7-2020',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      child: Text(
+                        '8-7-2020',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
                         ),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Container(
-            child: Row(
-              children: <Widget> [
-                Container(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 5, 5, 5),
+            Container(
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 5, 5, 5),
                       child: Icon(
                         Icons.room,
                         color: Colors.black,
@@ -639,52 +646,51 @@ Container InnerBottomWidgetOnGoing() {
                   Container(
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          'Gangodawila, Nugegoda',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      child: Text(
+                        'Gangodawila, Nugegoda',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
                         ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              children: <Widget>[
+                Container(
+                  child: Padding(
+                    padding: EdgeInsets.all(5.0),
                   ),
                 ),
+                Container(),
               ],
             ),
-          ),
-          Row(
-            children: <Widget>[
-              Container(
-                child: Padding(
-                  padding: EdgeInsets.all(5.0),
-                ),
-              ),
-              Container(),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-
-  );
-}
+    );
+  }
 
   Container InnerBottomWidget() {
-  return Container(
-    color: Colors.white,
-    alignment: Alignment.bottomCenter,
-    child: Padding(
-      padding: EdgeInsets.only(bottom:10),
-      child: FlatButton(
-        onPressed: () => _foldingCellKey?.currentState?.toggleFold(),
-        child: Text("Accept"),
-        textColor: Colors.black,
-        color: Colors.green[300],
-        splashColor: Colors.white.withOpacity(0.5),
-      ), 
-    ),
-  );
-}
+    return Container(
+      color: Colors.white,
+      alignment: Alignment.bottomCenter,
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 10),
+        child: FlatButton(
+          onPressed: () => _foldingCellKey?.currentState?.toggleFold(),
+          child: Text("Accept"),
+          textColor: Colors.black,
+          color: Colors.green[300],
+          splashColor: Colors.white.withOpacity(0.5),
+        ),
+      ),
+    );
+  }
 }
 
 class Choice {
@@ -715,15 +721,18 @@ class CustomListTile extends StatelessWidget {
             height: 50,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget> [
+              children: <Widget>[
                 Row(
                   children: <Widget>[
-                    Icon(icon, color: Colors.grey.shade500,),
+                    Icon(
+                      icon,
+                      color: Colors.grey.shade500,
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        text, 
-                        style: TextStyle(  
+                        text,
+                        style: TextStyle(
                           color: Colors.grey.shade400,
                           fontSize: 14.0,
                           fontWeight: FontWeight.bold,
@@ -732,8 +741,10 @@ class CustomListTile extends StatelessWidget {
                     ),
                   ],
                 ),
-                
-                Icon(Icons.arrow_right, color: Colors.grey.shade500,),
+                Icon(
+                  Icons.arrow_right,
+                  color: Colors.grey.shade500,
+                ),
               ],
             ),
           ),
