@@ -65,7 +65,7 @@ class _PendingOrdersState extends State<PendingOrders> {
     //print(response.body);
     Navigator.of(cont).pop();
     if (response.statusCode == 202) {
-      print("object");
+      //print("object");
       //Navigator.pop(context);
       
       return showDialog(
@@ -75,7 +75,13 @@ class _PendingOrdersState extends State<PendingOrders> {
                shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0),
             ),
-          content: Text("success"),
+          content: Text(
+            "You have an Ongoing Order!",
+            style: TextStyle(
+              color: Colors.cyan[400],
+              fontSize: 20.0,
+            ),
+          ),
         );
         }
       
