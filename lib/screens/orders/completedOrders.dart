@@ -21,6 +21,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
     List<Order> temp = [];
 
     for (var ord in jsonData['data']) {
+      print("here");
       print(ord);
 
       //print(ord);
@@ -31,34 +32,34 @@ class _CompletedOrdersState extends State<CompletedOrders> {
       //     ord["prescription_url"]
       //     );
 
-      // Order order = new Order(
-      //     ord["id"],
-      //     ord["clientId"],
-      //     ord["name"],
-      //     ord["delivery_address"],
-      //     ord["email"],
-      //     ord["patient"],
-      //     ord["contact"],
-      //     ord["nic"],
-      //     ord["ordered_at"],
-      //     ord["delivery_charges"],
-      //     ord["full_amount"],
-      //     ord["prescription_url"]
-      //     );
-
       Order order = new Order(
-          id: ord['id'],
-          clientId: ord['clientId'],
-          name: ord['name'],
-          delivery_address: ord['delivery_address'],
-          email: ord['email'],
-          patient: ord['patient'],
-          contact: ord['contact'],
-          nic: ord['nic'],
-          ordered_at: ord['ordered_at'],
-          delivery_charges: ord['delivery_charges'],
-          full_amount: ord['full_amount'],
-          prescription_url: ord['prescription_url']);
+          ord["id"],
+          ord["clientId"],
+          ord["name"],
+          ord["delivery_address"],
+          ord["email"],
+          ord["patient"],
+          ord["contact"],
+          ord["nic"],
+          ord["ordered_at"],
+          ord["delivery_charges"],
+          ord["full_amount"],
+          ord["prescription_url"]
+          );
+
+      // Order order = new Order(
+      //     id: ord['id'],
+      //     clientId: ord['clientId'],
+      //     name: ord['name'],
+      //     delivery_address: ord['delivery_address'],
+      //     email: ord['email'],
+      //     patient: ord['patient'],
+      //     contact: ord['contact'],
+      //     nic: ord['nic'],
+      //     ordered_at: ord['ordered_at'],
+      //     delivery_charges: ord['delivery_charges'],
+      //     full_amount: ord['full_amount'],
+      //     prescription_url: ord['prescription_url']);
       temp.add(order);
     }
     setState(() {
