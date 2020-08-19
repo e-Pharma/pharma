@@ -65,7 +65,7 @@ class _OngoingOrdersState extends State<OngoingOrders> {
             );
           } else {
             print('*******');
-            print("data came to the fornt end");
+            print("data came to the front end");
 
             orderData = snapshot.data;
 

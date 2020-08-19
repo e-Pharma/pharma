@@ -24,15 +24,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
-//  final List<String> entries = <String>['52364', '12445', '97855', '44512'];
-//  final List<String> address = <String>['Colombo-05', 'Maharagama', 'Dehiwala', 'Ward Place'];
   Completer<GoogleMapController> _controller = Completer();
   static const LatLng _center = const LatLng(45.521563, -122.677433);
-
-  //kd
-  // String token;
-  // Map orderData;
-  // Future getData()
 
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);

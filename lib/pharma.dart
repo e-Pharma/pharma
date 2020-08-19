@@ -10,8 +10,8 @@ import 'package:epharma/screens/map/map.dart';
 import 'package:epharma/screens/drawer/share_location/currentlocation.dart';
 
 class PharmaApp extends StatelessWidget {
-  PharmaApp() {
-  }
+  PharmaApp();
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

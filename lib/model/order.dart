@@ -2,30 +2,40 @@ class Order {
   String id,
       clientId,
       name,
+      // ignore: non_constant_identifier_names
       delivery_address,
       email,
       patient,
       contact,
       nic,
+      // ignore: non_constant_identifier_names
       ordered_at,
+      // ignore: non_constant_identifier_names
       prescription_url;
 
+  // ignore: non_constant_identifier_names
   final int delivery_charges,
+      // ignore: non_constant_identifier_names
       full_amount;
 
-  Order(
+  Order({
       this.id,
         this.clientId,
         this.name,
+        // ignore: non_constant_identifier_names
         this.delivery_address,
         this.email,
         this.patient,
         this.contact,
         this.nic,
+        // ignore: non_constant_identifier_names
         this.ordered_at,
+        // ignore: non_constant_identifier_names
         this.delivery_charges,
+        // ignore: non_constant_identifier_names
         this.full_amount,
-        this.prescription_url);
+        // ignore: non_constant_identifier_names
+        this.prescription_url});
 
   // factory Order.fromJson(Map<String, dynamic> json) {
   //   return Order(

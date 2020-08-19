@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
+// ignore: camel_case_types
 class Notification_Tab extends StatefulWidget {
   @override
   _Notification_TabState createState() => _Notification_TabState();
 }
 
+// ignore: camel_case_types
 class _Notification_TabState extends State<Notification_Tab> {
   final List<String> sender = <String>['Pharmacist', 'Client(Order Id:12556)'];
   final List<String> msg = <String>['Check the PENDING orders to accept orders for next day', 'Can you deliver the package after noon?'];

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 
 class ShareLocation extends StatefulWidget {
@@ -33,7 +33,7 @@ class _ShareLocationState extends State<ShareLocation> {
           children: <Widget>[
             if (_currentPosition != null)
               Text(
-                  "Address: ${_currentAddress}"),
+                  "Address: $_currentAddress"),
             FlatButton(
               child: Text("Get location"),
               onPressed: () {
