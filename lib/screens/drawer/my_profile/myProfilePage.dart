@@ -117,19 +117,33 @@ class _ProfileState extends State<Profile> {
                       subtitle: Center(child: Text(driverData['_id'])),
                     ),
                   ),
+                  
                   SizedBox(height: 2),
-                  Container(
-                    child: CustomListTile(
-                        Icons.room, 'Address', () => {}, driverData['address']),
-                  ),
-                  Container(
-                    child: CustomListTile(
-                        Icons.email, 'Email', () => {}, driverData['email']),
-                  ),
-                  Container(
-                    child: CustomListTile(
-                        Icons.phone, 'Phone', () => {}, driverData['phone']),
-                  ),
+                  new TextFormField(
+                        decoration: const InputDecoration(
+                          icon: const Icon(Icons.room),
+                          labelText: "Address",
+                        ),
+                        initialValue: driverData['address'],
+                        enabled: false,
+                      ),
+                      new TextFormField(
+                        decoration: const InputDecoration(
+                          icon: const Icon(Icons.email),
+                          labelText: "Email",
+                        ),
+                        initialValue: driverData['email'],
+                        enabled: false,
+                      ),
+                      new TextFormField(
+                        decoration: const InputDecoration(
+                          icon: const Icon(Icons.phone),
+                          labelText: "Phone",
+                        ),
+                        initialValue: driverData['phone'],
+                        enabled: false,
+                      ),
+
                   Container(
                     width: MediaQuery.of(context).size.width,
                     margin: const EdgeInsets.only(
