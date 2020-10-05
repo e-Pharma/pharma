@@ -175,6 +175,7 @@ class _EditProfileState extends State<EditProfile> {
                                         ),
                                 ),
                               ),
+                              
                             ),
                           ),
                           Padding(
