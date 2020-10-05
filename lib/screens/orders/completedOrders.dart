@@ -33,7 +33,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
   // ignore: non_constant_identifier_names
   String prescription_url;
 
-  Future getPendingOrder() async {
+  Future getCompletedOrder() async {
     await SharedPreferences.getInstance().then((prefs) {
       token = prefs.getString("token");
     });
@@ -49,7 +49,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-          future: this.getPendingOrder(),
+          future: this.getCompletedOrder(),
           builder: (context, snapshot) {
             if (snapshot.data == null) {
               print("Loading completed order data ..");
