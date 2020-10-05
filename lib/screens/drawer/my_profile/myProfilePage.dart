@@ -22,12 +22,12 @@ class _ProfileState extends State<Profile> {
       token = prefs.getString("token");
     });
     var decodedToken = new JWT.parse(token);
-    print(decodedToken.claims['id']);
+    //print(decodedToken.claims['id']);
 
     Response response = await get(
         'https://e-pharma-server.herokuapp.com/driver/get/' +
             decodedToken.claims['id']);
-    print(response.body);
+    //print(response.body);
     // setState(() {
     //   driverData=jsonDecode(response.body)['data'];
     // });
@@ -64,8 +64,8 @@ class _ProfileState extends State<Profile> {
               // return Text("Kukku baba");
               return Center(child: SpinKitChasingDots(color: Colors.cyan[400]));
             } else {
-              print("data came to the frontend");
-              print(snapshot.data);
+              // print("data came to the frontend");
+              // print(snapshot.data);
               driverData = snapshot.data;
               return ListView(
                 children: <Widget>[

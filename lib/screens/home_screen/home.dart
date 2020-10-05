@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:epharma/model/order.dart';
+
 
 import 'package:flutter/material.dart';
 import 'package:epharma/screens/drawer/my_profile/myProfilePage.dart';
@@ -10,6 +10,13 @@ import 'package:epharma/screens/orders/completedOrders.dart';
 import 'package:epharma/screens/map/map.dart';
 import 'package:epharma/screens/orders/pendingOrders.dart';
 import 'package:epharma/screens/orders/ongoingOrders.dart';
+import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:corsac_jwt/corsac_jwt.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'dart:convert';
+import 'dart:async';
 
 //import 'package:latlng/latlng.dart';
 //import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
@@ -24,11 +31,38 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
+  //google map
   Completer<GoogleMapController> _controller = Completer();
   static const LatLng _center = const LatLng(45.521563, -122.677433);
 
+  //driver data
+  String token;
+  Map driverData;
+  //String user_name;
+
+  Future getData() async {
+    await SharedPreferences.getInstance().then((prefs) {
+      token = prefs.getString("token");
+    });
+
+    var decodedToken = new JWT.parse(token);
+
+    Response response = await get(
+      'https://e-pharma-server.herokuapp.com/driver/get/' +
+            decodedToken.claims['id']
+    );
+    return jsonDecode(response.body)["data"];
+  }
+
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //this.getData();
   }
 
   @override
@@ -60,26 +94,82 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
+                  // child: FutureBuilder(
+                  //   future: this.getData(),
+                  //   builder: (context, snapshot) {
+                  //     if(snapshot.data == null) {
+                  //       print("drawer error");
+                  //     } else {
+                  //       print("drawer okay");
+                  //       driverData = snapshot.data;
+                        
+                  //       return Container(
+                  //         child: Column(
+                  //       children: <Widget>[
+                  //         CircleAvatar(
+                  //           radius: 50.0,
+                  //           backgroundImage: AssetImage('images/driver.jpg'),
+                  //         ),
+                  //         Padding(
+                            
+                  //           padding: const EdgeInsets.all(5.0),
+                  //           child: Text(
+                  //             //driverData['user_name'], 
+                  //             'shani',
+                  //             style: TextStyle(
+                  //               color: Colors.white,
+                  //               fontSize: 20,
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //       );
+                  //     }
+                  //   },
+                  //   //                   child: Container(
+                  //   //   child: Column(
+                  //   //     children: <Widget>[
+                  //   //       CircleAvatar(
+                  //   //         radius: 50.0,
+                  //   //         backgroundImage: AssetImage('images/driver.jpg'),
+                  //   //       ),
+                  //   //       Padding(
+                            
+                  //   //         padding: const EdgeInsets.all(5.0),
+                  //   //         child: Text(
+                  //   //           'Michael',
+                  //   //           style: TextStyle(
+                  //   //             color: Colors.white,
+                  //   //             fontSize: 20,
+                  //   //           ),
+                  //   //         ),
+                  //   //       ),
+                  //   //     ],
+                  //   //   ),
+                  //   // ),
+                  // ),
                   child: Container(
-                    child: Column(
-                      children: <Widget>[
-                        CircleAvatar(
-                          radius: 50.0,
-                          backgroundImage: AssetImage('images/driver.jpg'),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Text(
-                            'Michael',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
+                      child: Column(
+                        children: <Widget>[
+                          CircleAvatar(
+                            radius: 50.0,
+                            backgroundImage: AssetImage('images/driver.jpg'),
+                          ),
+                          Padding(
+                            
+                            padding: const EdgeInsets.all(5.0),
+                            child: Text(
+                              'Michael',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
                 ),
                 CustomListTile(
                   Icons.person,

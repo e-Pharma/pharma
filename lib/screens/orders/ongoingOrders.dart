@@ -39,6 +39,9 @@ class _OngoingOrdersState extends State<OngoingOrders> {
   int full_amount;
   String prescription_url;
 
+  double latitude ;
+  double longitude;
+
   Future getOngoingOrder() async {
     await SharedPreferences.getInstance().then((prefs) {
       token = prefs.getString("token");
@@ -106,6 +109,9 @@ class _OngoingOrdersState extends State<OngoingOrders> {
           full_amount = orderData['full_amount'];
           String order_id = orderData["_id"];
 
+          latitude = orderData["lat"];
+          longitude = orderData["long"];
+
           return AlertDialog(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.0),
@@ -161,6 +167,16 @@ class _OngoingOrdersState extends State<OngoingOrders> {
                       labelText: "Full Amount",
                     ),
                     initialValue: full_amount.toString(),
+                    enabled: false,
+                  ),
+                ),
+                Container(
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      icon: const Icon(Icons.attach_money),
+                      labelText: "Location - TEST",
+                    ),
+                    initialValue: latitude.toString(),
                     enabled: false,
                   ),
                 ),

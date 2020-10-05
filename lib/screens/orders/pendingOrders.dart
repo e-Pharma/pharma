@@ -29,6 +29,8 @@ class _PendingOrdersState extends State<PendingOrders> {
   int full_amount;
   String prescription_url;
 
+  
+
   Future getPendingOrder() async {
     await SharedPreferences.getInstance().then((prefs) {
       token = prefs.getString("token");
@@ -49,7 +51,7 @@ class _PendingOrdersState extends State<PendingOrders> {
     });
     var decodedToken = new JWT.parse(token);
     print(decodedToken.claims['id']);
-    String status = 'ongoing';
+    String status = 'dispatched';
     Response response = await post(
       "https://e-pharma-server.herokuapp.com/driver/updateOrderStatus/" +
           orderid,
@@ -102,6 +104,25 @@ class _PendingOrdersState extends State<PendingOrders> {
     }
   }
 
+  retrieveLocation(String orderid, BuildContext cont) async {
+    await SharedPreferences.getInstance().then((prefs) {
+      token = prefs.getString("token");
+    });
+    var decodedToken = new JWT.parse(token);
+    print(decodedToken.claims['id']);
+
+    Response response = await post(
+      "https://e-pharma-server.herokuapp.com/driver/pendingOrders/" +
+          orderid,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        
+      }),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,6 +153,7 @@ class _PendingOrdersState extends State<PendingOrders> {
                   itemBuilder: (BuildContext context, int index) {
                     name = orderData[index]['name'];
                     contact = orderData[index]['contact'];
+                    
                     return Container(
                       // height: 450,
                       child: ListTile(
@@ -162,6 +184,7 @@ class _PendingOrdersState extends State<PendingOrders> {
           nic = orderData['nic'];
           full_amount = orderData['full_amount'];
           String order_id = orderData["_id"];
+          
 
           return AlertDialog(
             shape: RoundedRectangleBorder(
