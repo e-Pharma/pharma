@@ -66,6 +66,7 @@ flutter:
     - images/shani.jpg
     - images/driver.jpg
     - images/location.png
+    - images/room.png
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

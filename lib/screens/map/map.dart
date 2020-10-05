@@ -7,6 +7,7 @@ import 'package:corsac_jwt/corsac_jwt.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 void main() => runApp(Map());
 
@@ -16,7 +17,6 @@ class Map extends StatefulWidget {
 }
 
 class _MapState extends State<Map> {
-
   GoogleMapController mapController;
   final LatLng _center = const LatLng(6.9271, 79.8612);
 
@@ -31,10 +31,10 @@ class _MapState extends State<Map> {
   @override
   void initState() {
     BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(devicePixelRatio: 2.5),
-      'images/location.png').then((onValue) {
-        pinLocationIcon = onValue;
-      });
+            ImageConfiguration(devicePixelRatio: 2.5), 'images/location.png')
+        .then((onValue) {
+      pinLocationIcon = onValue;
+    });
   }
 
   String token;
@@ -42,7 +42,7 @@ class _MapState extends State<Map> {
   double latitude;
   double longitude;
 
-  Map orderData; //Map?  List?
+  List orderData; //Map?  List?
 
   Future getOngoingOrder() async {
     await SharedPreferences.getInstance().then((prefs) {
@@ -53,63 +53,52 @@ class _MapState extends State<Map> {
 
     Response response =
         await get("https://e-pharma-server.herokuapp.com/driver/ongoingOrders");
+    // +decodedToken.claims['id']);
     return jsonDecode(response.body)['data'];
   }
 
-
   @override
   Widget build(BuildContext context) {
-
-    body: FutureBuilder(
+    return FutureBuilder(
       future: this.getOngoingOrder(),
       builder: (context, snapshot) {
-        if(snapshot.data == null) {
-          print("Location error");
-        } 
-        else{
-          orderData = snapshot.data;
-          return Container(
-            latitude = orderData['lat'];
-            longitude = orderData['long'];
-
-            LatLng pinPosition = LatLng(latitude, longitude);
-
-            CameraPosition initialLocation = CameraPosition(
-      target: pinPosition,
-      zoom: 16,
-      bearing: 30
-    );
-
-    return GoogleMap(
-      myLocationButtonEnabled: true,
-      markers: _markers,
-      initialCameraPosition: initialLocation,
-      onMapCreated: (GoogleMapController controller) {
-        _controller.complete(controller);
-
-        setState(() {
-          _markers.add(
-            Marker(
-              markerId: MarkerId('<MARKER_ID>'),
-              position: pinPosition,
-              icon: pinLocationIcon
-              )
-          )
-        });
-      },
-      
-      );
+        if (snapshot.data == null) {
+          print(
+              "Location error"); 
+          return Center(
+            child: SpinKitChasingDots(color: Colors.cyan[400]),
           );
-          
+        } else {
+          orderData = snapshot.data;
+
+          latitude = orderData[0]['lat'];
+          longitude = orderData[0]['long'];
+          print(snapshot.data);
+          LatLng pinPosition = LatLng(latitude, longitude);
+
+          CameraPosition initialLocation =
+              CameraPosition(target: pinPosition, zoom: 15, bearing: 30);
+          print(orderData);
+          return Container(
+              child: GoogleMap(
+            myLocationButtonEnabled: true,
+            markers: _markers,
+            initialCameraPosition: initialLocation,
+            onMapCreated: (GoogleMapController controller) {
+              _controller.complete(controller);
+
+              setState(() {
+                _markers.add(Marker(
+                    markerId: MarkerId('<MARKER_ID>'),
+                    position: pinPosition,
+                    icon: pinLocationIcon));
+              });
+            },
+          ));
         }
       },
     );
 
-    
-
-    
-
-    
     // return Scaffold(
     //   appBar: new AppBar(
     //     title: const Text(
@@ -131,7 +120,7 @@ class _MapState extends State<Map> {
     //         orderData = snapshot.data;
     //         //1
     //         return GoogleMap(
-              
+
     //           onMapCreated: _onMapCreated,
     //           //which part of the world you want the map to point at
     //           //2
