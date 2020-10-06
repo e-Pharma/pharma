@@ -40,8 +40,58 @@ class _OngoingOrdersState extends State<OngoingOrders> {
   int full_amount;
   String prescription_url;
 
-  double latitude ;
+  double latitude;
   double longitude;
+
+  updateOrderStatus(String orderid, BuildContext cont) async {
+    await SharedPreferences.getInstance().then((prefs) {
+      token = prefs.getString("token");
+    });
+    var decodedToken = new JWT.parse(token);
+    print(decodedToken.claims['id']);
+    String status = 'completed';
+    Response response = await post(
+      "https://e-pharma-server.herokuapp.com/driver/updateOrderStatus/" +
+          orderid,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'status': status,
+      }),
+    );
+
+    Navigator.of(cont).pop();
+    if (response.statusCode == 202) {
+      return showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              content: Text(
+                "You have a Completed Order!",
+                style: TextStyle(
+                  color: Colors.cyan[400],
+                  fontSize: 20.0,
+                ),
+              ),
+            );
+          });
+    } else {
+      return showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              content: Text("fail"),
+            );
+          });
+    }
+  }
 
   Future getOngoingOrder() async {
     await SharedPreferences.getInstance().then((prefs) {
@@ -191,24 +241,78 @@ class _OngoingOrdersState extends State<OngoingOrders> {
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width / 2,
-                    child: FlatButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
-                      ),
-                      color: Colors.red,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => DeliveryRoute()),
-                        );
-                      },
-                      splashColor: Colors.blueGrey,
-                      child: Text(
-                        'START NAVIGATE',
-                        style: TextStyle(color: Colors.white, fontSize: 16.0),
-                      ),
+                    child: Column(
+                      children: <Widget>[
+                        FlatButton(
+                          
+                          shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        color: Colors.red,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => DeliveryRoute()),
+                          );
+                        },
+                        splashColor: Colors.blueGrey,
+                        child: Text(
+                          'START NAVIGATE',
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                        ),
+                        ),
+                        FlatButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          color: Colors.greenAccent[400],
+                          onPressed: () {
+                            updateOrderStatus(order_id, context);
+                          },
+                          splashColor: Colors.blueGrey,
+                          child: Text(
+                            'ORDER COMPLETED',
+                            style: TextStyle(color: Colors.white, fontSize: 16.0),
+                          ),
+                        )
+                      ],
                     ),
                   ),
+                  // Container(
+                  //   width: MediaQuery.of(context).size.width / 2,
+                  //   child: FlatButton(
+                  //     shape: RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.circular(30.0),
+                  //     ),
+                  //     color: Colors.red,
+                  //     onPressed: () {
+                  //       Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(builder: (context) => DeliveryRoute()),
+                  //       );
+                  //     },
+                  //     splashColor: Colors.blueGrey,
+                  //     child: Text(
+                  //       'START NAVIGATE',
+                  //       style: TextStyle(color: Colors.white, fontSize: 16.0),
+                  //     ),
+                  //   ),
+
+                  // ),
+                  // FlatButton(
+                  //   shape: RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.circular(30.0),
+                  //     ),
+                  //     color: Colors.red,
+                  //     onPressed: () {
+                  //      updateOrderStatus(order_id,context);
+                  //     },
+                  //     splashColor: Colors.blueGrey,
+                  //     child: Text(
+                  //       'ORDER COMPLETED',
+                  //       style: TextStyle(color: Colors.white, fontSize: 16.0),
+                  //     ),
+                  // )
                 ],
               ),
               SizedBox(

@@ -67,7 +67,7 @@ class _DeliveryRouteState extends State<DeliveryRoute> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   String token;
 
-
+  
 
   Future getOngoingOrder() async {
     await SharedPreferences.getInstance().then((prefs) {
