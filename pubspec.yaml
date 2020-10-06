@@ -42,6 +42,8 @@ dependencies:
   image_picker: ^0.6.7+2
   folding_cell: ^0.1.0
   google_maps_flutter: ^0.5.28+1
+  google_map_polyline:
+  flutter_polyline_points: ^0.2.4
   flutter_map: ^0.9.0
   latlng: ^0.0.2
   get: ^3.4.2
