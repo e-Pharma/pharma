@@ -8,6 +8,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:epharma/screens/map/map.dart';
+import 'package:epharma/screens/deliveryRoute/deliveryRoute.dart';
 import 'package:flutter_map/flutter_map.dart';
 
 class OngoingOrders extends StatefulWidget {
@@ -198,7 +199,7 @@ class _OngoingOrdersState extends State<OngoingOrders> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Map()),
+                          MaterialPageRoute(builder: (context) => DeliveryRoute()),
                         );
                       },
                       splashColor: Colors.blueGrey,
