@@ -15,7 +15,7 @@ class Notification_Tab extends StatefulWidget {
 // ignore: camel_case_types
 class _Notification_TabState extends State<Notification_Tab> {
   String token;
-  List Notification;
+  List notification;
 
   String id;
   String sender;
@@ -58,20 +58,20 @@ class _Notification_TabState extends State<Notification_Tab> {
               );
             } else {
               print("Notifications came to the front end");
-              Notification = snapshot.data;
+              notification = snapshot.data;
 
               return ListView.builder(
-                  itemCount: Notification.length,
+                  itemCount: notification.length,
                   itemBuilder: (BuildContext context, int index) {
-                    sender = Notification[index]['sender'];
-                    message = Notification[index]['message'];
-                    return Container(
+                    sender = notification[index]['sender'];
+                    message = notification[index]['message'];
+                    return Card(
                       child: ListTile(
-                        title: Text(Notification[index]['sender']),
-                        subtitle: Text(Notification[index]['message']),
+                        title: Text(notification[index]['sender']),
+                        subtitle: Text(notification[index]['message']),
                         trailing: Icon(Icons.keyboard_arrow_right),
                         // onTap: () {
-                        //   _popupDialog(Notification[index]);
+                        //   _popupDialog(notification[index]);
                         // },
                       ),
                     );

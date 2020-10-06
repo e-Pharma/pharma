@@ -1,4 +1,5 @@
 import 'package:corsac_jwt/corsac_jwt.dart';
+import 'package:epharma/screens/deliveryRoute/deliveryRoute.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -198,7 +199,7 @@ class _OngoingOrdersState extends State<OngoingOrders> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => Map()),
+                          MaterialPageRoute(builder: (context) => MapView()),
                         );
                       },
                       splashColor: Colors.blueGrey,
