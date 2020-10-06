@@ -98,7 +98,8 @@ class _DeliveryRouteState extends State<DeliveryRoute> {
     Icon prefixIcon,
     Widget suffixIcon,
     Function(String) locationCallback,
-  }) {
+  }) 
+  {
     return Container(
       width: width * 0.8,
       child: TextField(
