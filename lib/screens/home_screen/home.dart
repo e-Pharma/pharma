@@ -462,10 +462,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ),*/
             FlatButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Map()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => Map()),
+                // );
               },
               child: Text('Start Ride'),
               textColor: Colors.black,

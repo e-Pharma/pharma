@@ -9,6 +9,8 @@ import 'package:corsac_jwt/corsac_jwt.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 
+import 'package:epharma/screens/deliveryRoute/destinationAddress.dart';
+
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'dart:math' show cos, sqrt, asin;
@@ -44,11 +46,17 @@ class _DeliveryRouteState extends State<DeliveryRoute> {
   String _currentAddress;
 
   final startAddressController = TextEditingController();
-  final destinationAddressController = TextEditingController();
+  // final destinationAddressController = TextEditingController();
 
   String _startAddress = '';
   String _destinationAddress = '';
   String _placeDistance;
+  double clientLatitude;
+  double clientLongitude;
+  String clientAddress;
+
+  List orderData;
+
 
   Set<Marker> markers = {};
 
@@ -59,19 +67,28 @@ class _DeliveryRouteState extends State<DeliveryRoute> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   String token;
 
+
+
   Future getOngoingOrder() async {
     await SharedPreferences.getInstance().then((prefs) {
-      
       token = prefs.getString("token");
-   
     });
     var decodedToken = new JWT.parse(token);
     print(decodedToken.claims['id']);
 
     Response response =
         await get("https://e-pharma-server.herokuapp.com/driver/ongoingOrders");
+            print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+            Map result=jsonDecode(response.body)['data'][0];
+            print(result['lat']);
+        setState(() {
+          clientLatitude=result['lat'];
+          clientLongitude=result['long']; 
+          clientAddress=result['delivery_address'];
+        });
     return jsonDecode(response.body)['data'];
   }
+
 
   Widget _textField({
     TextEditingController controller,
@@ -143,6 +160,29 @@ class _DeliveryRouteState extends State<DeliveryRoute> {
     });
   }
 
+  // Method for retrieving the destination location
+  _getDestinationLocation() async {
+    await _geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) async {
+      setState(() {
+        _currentPosition = position;
+        print('CURRENT POS: $_currentPosition');
+        mapController.animateCamera(
+          CameraUpdate.newCameraPosition(
+            CameraPosition(
+              target: LatLng(clientLatitude, clientLongitude),
+              zoom: 18.0,
+            ),
+          ),
+        );
+      });
+      await _getAddress();
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
   // Method for retrieving the address
   _getAddress() async {
     try {
@@ -162,14 +202,24 @@ class _DeliveryRouteState extends State<DeliveryRoute> {
     }
   }
 
+  
   // Method for calculating the distance between two places
   Future<bool> _calculateDistance() async {
+
     try {
+      
+
       // Retrieving placemarks from addresses
       List<Placemark> startPlacemark =
           await _geolocator.placemarkFromAddress(_startAddress);
       List<Placemark> destinationPlacemark =
-          await _geolocator.placemarkFromAddress(_destinationAddress);
+          // await _geolocator.placemarkFromAddress(_destinationAddress);
+          await _geolocator.placemarkFromCoordinates(clientLatitude,clientLongitude);
+
+
+      print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+      print('$clientLatitude');
+      print('$clientLongitude');
 
       if (startPlacemark != null && destinationPlacemark != null) {
         // Use the retrieved coordinates of the current position,  instead of the address if the start position is user'scurrent position, as it results in better accuracy.
@@ -179,6 +229,7 @@ class _DeliveryRouteState extends State<DeliveryRoute> {
                 longitude: _currentPosition.longitude)
             : startPlacemark[0].position;
         Position destinationCoordinates = destinationPlacemark[0].position;
+
 
         // Start Location Marker
 
@@ -200,8 +251,8 @@ class _DeliveryRouteState extends State<DeliveryRoute> {
         Marker destinationMarker = Marker(
           markerId: MarkerId('$destinationCoordinates'),
           position: LatLng(
-            destinationCoordinates.latitude,
-            destinationCoordinates.longitude,
+            clientLatitude,
+            clientLongitude,
           ),
           infoWindow: InfoWindow(
             title: 'Destination',
@@ -218,6 +269,12 @@ class _DeliveryRouteState extends State<DeliveryRoute> {
         print('START COORDINATES: $startCoordinates');
 
         print('DESTINATION COORDINATES: $destinationCoordinates');
+
+       
+        print('BLAHhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh: $clientLatitude');
+
+
+        
 
         Position _northeastCoordinates;
         Position _southwestCoordinates;
@@ -324,6 +381,8 @@ class _DeliveryRouteState extends State<DeliveryRoute> {
   void initState() {
     super.initState();
     _getCurrentLocation();
+    getOngoingOrder();
+    _destinationAddress= clientAddress;
   }
 
   @override
@@ -421,8 +480,9 @@ class _DeliveryRouteState extends State<DeliveryRoute> {
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Text(
-                            'Places',
-                            style: TextStyle(fontSize: 20.0),
+                            'Delivery Route',
+                            style: TextStyle(fontSize: 20.0, color: Colors.cyan[600],),
+                        
                           ),
                           SizedBox(height: 10),
                           _textField(
@@ -442,19 +502,17 @@ class _DeliveryRouteState extends State<DeliveryRoute> {
                                 setState(() {
                                   _startAddress = value;
                                 });
-                              }),
+                              }
+                              ),
                           SizedBox(height: 10),
-                          _textField(
-                              label: 'Destination',
-                              hint: 'Choose destination',
+                          TextField(
+                            decoration: InputDecoration(
+                              hintText: clientAddress,
                               prefixIcon: Icon(Icons.looks_two),
-                              controller: destinationAddressController,
-                              width: width,
-                              locationCallback: (String value) {
-                                setState(() {
-                                  _destinationAddress = value;
-                                });
-                              }),
+                              border: OutlineInputBorder(),
+                              labelText: clientAddress,
+                            ),
+                          ),
                           SizedBox(height: 10),
                           Visibility(
                             visible: _placeDistance == null ? false : true,
@@ -492,7 +550,7 @@ class _DeliveryRouteState extends State<DeliveryRoute> {
                                         _scaffoldKey.currentState.showSnackBar(
                                           SnackBar(
                                             content: Text(
-                                                'Error Calculating Distance'),
+                                                'Error Calculating the Distance'),
                                           ),
                                         );
                                       }
