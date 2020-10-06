@@ -120,7 +120,7 @@ class _OngoingOrdersState extends State<OngoingOrders> {
             );
           } else {
             print('*******');
-            print("data came to the front end");
+            print("Ongoing Order data came to the front end");
 
             orderData = snapshot.data;
 
@@ -156,6 +156,7 @@ class _OngoingOrdersState extends State<OngoingOrders> {
 
           name = orderData['name'];
           delivery_address = orderData['delivery_address'];
+          print(delivery_address);
           contact = orderData['contact'];
           nic = orderData['nic'];
           full_amount = orderData['full_amount'];

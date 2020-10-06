@@ -76,11 +76,16 @@ class _DeliveryRouteState extends State<DeliveryRoute> {
     var decodedToken = new JWT.parse(token);
     print(decodedToken.claims['id']);
 
+    // clientAddress = '';
+    // clientLatitude = 0.0;
+    // clientLongitude = 0.0;
+
     Response response =
         await get("https://e-pharma-server.herokuapp.com/driver/ongoingOrders");
             print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
             Map result=jsonDecode(response.body)['data'][0];
-            print(result['lat']);
+            print(result);
+            print(result['delivery_address']);
         setState(() {
           clientLatitude=result['lat'];
           clientLongitude=result['long']; 
@@ -218,9 +223,9 @@ class _DeliveryRouteState extends State<DeliveryRoute> {
           await _geolocator.placemarkFromCoordinates(clientLatitude,clientLongitude);
 
 
-      print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-      print('$clientLatitude');
-      print('$clientLongitude');
+      print("\n\n\n\n\n\n");
+      print('CLat $clientLatitude');
+      print('CLong $clientLongitude');
 
       if (startPlacemark != null && destinationPlacemark != null) {
         // Use the retrieved coordinates of the current position,  instead of the address if the start position is user'scurrent position, as it results in better accuracy.
@@ -272,8 +277,9 @@ class _DeliveryRouteState extends State<DeliveryRoute> {
         print('DESTINATION COORDINATES: $destinationCoordinates');
 
        
-        print('BLAHhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh: $clientLatitude');
-
+        print('Client Latitude: $clientLatitude');
+        print('Client Longitude: $clientLongitude');
+        print('Client Address: $clientAddress');
 
         
 
@@ -308,12 +314,12 @@ class _DeliveryRouteState extends State<DeliveryRoute> {
         );
 
         // Calculating the distance between the start and the end positions with a straight path, without considering any route
-        // double distanceInMeters = await Geolocator().bearingBetween(
-        //   startCoordinates.latitude,
-        //   startCoordinates.longitude,
-        //   destinationCoordinates.latitude,
-        //   destinationCoordinates.longitude,
-        // );
+        double distanceInMeters = await Geolocator().bearingBetween(
+          startCoordinates.latitude,
+          startCoordinates.longitude,
+          destinationCoordinates.latitude,
+          destinationCoordinates.longitude,
+        );
 
         await _createPolylines(startCoordinates, destinationCoordinates);
 
@@ -383,7 +389,7 @@ class _DeliveryRouteState extends State<DeliveryRoute> {
     super.initState();
     _getCurrentLocation();
     getOngoingOrder();
-    _destinationAddress= clientAddress;
+    _destinationAddress=clientAddress;
   }
 
   @override
