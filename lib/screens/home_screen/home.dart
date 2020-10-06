@@ -186,11 +186,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   'Share location',
                   () => {Navigator.pushNamed(context, '/location')},
                 ),
-                CustomListTile(
-                  Icons.settings,
-                  'Settings',
-                  () => {},
-                ),
+                // CustomListTile(
+                //   Icons.settings,
+                //   'Settings',
+                //   () => {},
+                // ),
                 CustomListTile(
                   Icons.lock,
                   'Log Out',

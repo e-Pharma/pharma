@@ -15,6 +15,7 @@ import 'package:corsac_jwt/corsac_jwt.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:epharma/screens/drawer/my_profile/myProfilePage.dart';
 
 class EditProfile extends StatefulWidget {
   @override
@@ -105,12 +106,13 @@ class _EditProfileState extends State<EditProfile> {
       }
     }
   }
+  
 
   @override
   Widget build(BuildContext context) {
     Future getImage() async {
       //get the image from the gallery
-      var image = await ImagePicker.pickImage(source: ImageSource.camera);
+      var image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
       setState(() {
         _image = image;
@@ -135,7 +137,7 @@ class _EditProfileState extends State<EditProfile> {
           builder: (context, snapshot) {
             if (snapshot.data == null) {
               print("error");
-              return Center(child: SpinKitChasingDots(color: Colors.black));
+              return Center(child: SpinKitChasingDots(color: Colors.cyan));
             } else {
               print("data retrieved");
               print(snapshot.data);
@@ -279,8 +281,15 @@ class _EditProfileState extends State<EditProfile> {
                               borderRadius: BorderRadius.circular(30.0),
                             ),
                             color: Colors.green[300],
-                            onPressed: () {
+                            onPressed: () async {
                               editDriver();
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Profile()),
+                              );
+                              getData();
+
                             },
                             splashColor: Colors.blueGrey,
                             child: Text(

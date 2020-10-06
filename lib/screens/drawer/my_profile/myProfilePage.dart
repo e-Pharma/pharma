@@ -41,6 +41,14 @@ class _ProfileState extends State<Profile> {
     // this.getData();
   }
 
+  Future<Null> refresh() async {
+    await Future.delayed(Duration(seconds: 2));
+    setState(() {
+      getData();
+    });
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,6 +64,7 @@ class _ProfileState extends State<Profile> {
         ),
         backgroundColor: Colors.cyan[200],
       ),
+
       body: FutureBuilder(
           future: this.getData(),
           builder: (context, snapshot) {
@@ -117,33 +126,40 @@ class _ProfileState extends State<Profile> {
                       subtitle: Center(child: Text(driverData['_id'])),
                     ),
                   ),
-                  
                   SizedBox(height: 2),
-                  new TextFormField(
-                        decoration: const InputDecoration(
-                          icon: const Icon(Icons.room),
-                          labelText: "Address",
-                        ),
-                        initialValue: driverData['address'],
-                        enabled: false,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12),
+                    child: new TextFormField(
+                      decoration: const InputDecoration(
+                        icon: const Icon(Icons.room),
+                        labelText: "Address",
                       ),
-                      new TextFormField(
-                        decoration: const InputDecoration(
-                          icon: const Icon(Icons.email),
-                          labelText: "Email",
-                        ),
-                        initialValue: driverData['email'],
-                        enabled: false,
+                      initialValue: driverData['address'],
+                      enabled: false,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12),
+                    child: new TextFormField(
+                      decoration: const InputDecoration(
+                        icon: const Icon(Icons.email),
+                        labelText: "Email",
                       ),
-                      new TextFormField(
-                        decoration: const InputDecoration(
-                          icon: const Icon(Icons.phone),
-                          labelText: "Phone",
-                        ),
-                        initialValue: driverData['phone'],
-                        enabled: false,
+                      initialValue: driverData['email'],
+                      enabled: false,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12),
+                    child: new TextFormField(
+                      decoration: const InputDecoration(
+                        icon: const Icon(Icons.phone),
+                        labelText: "Phone",
                       ),
-
+                      initialValue: driverData['phone'],
+                      enabled: false,
+                    ),
+                  ),
                   Container(
                     width: MediaQuery.of(context).size.width,
                     margin: const EdgeInsets.only(

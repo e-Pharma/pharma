@@ -9,7 +9,11 @@ import 'package:epharma/screens/drawer/share_location/share_location.dart';
 import 'package:epharma/screens/map/map.dart';
 import 'package:epharma/screens/drawer/share_location/currentlocation.dart';
 import 'package:epharma/screens/deliveryRoute/deliveryRoute.dart';
+<<<<<<< Updated upstream
 // import 'package:epharma/screens/deliveryRoute/destinationAddress';
+=======
+import 'package:epharma/screens/map/mapNew.dart';
+>>>>>>> Stashed changes
 
 class PharmaApp extends StatelessWidget {
   PharmaApp();
@@ -31,7 +35,11 @@ class PharmaApp extends StatelessWidget {
         '/location' : (context) => ShareLocation(),
         '/currentlocation' : (context) => CurrentLocation(),
         '/delRoute' : (context) => DeliveryRoute(),
+<<<<<<< Updated upstream
 
+=======
+        '/mapNew' : (context) => MapNew(),
+>>>>>>> Stashed changes
  
       },
     );

@@ -23,10 +23,17 @@
 //   GoogleMapController mapController;
 //   final LatLng _center = const LatLng(6.9271, 79.8612);
 
+<<<<<<< Updated upstream
 //   //Polyline
 //   final Set<Polyline> polyline = {};
 //   List<LatLng> routeCoords;
 //   GoogleMapPolyline googleMapPolyline = new GoogleMapPolyline(apiKey: "");
+=======
+  //Polyline
+  final Set<Polyline> polyline = {};
+  List<LatLng> routeCoords;
+  GoogleMapPolyline googleMapPolyline = new GoogleMapPolyline(apiKey: "AIzaSyBBk823l5LTEiRQUCJyTa9WLW8C1psVRTE0");
+>>>>>>> Stashed changes
 
   
 //   //google map controller

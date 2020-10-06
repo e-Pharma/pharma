@@ -6,6 +6,7 @@ import 'package:http/http.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:epharma/screens/map/mapNew.dart';
 
 import 'package:epharma/screens/map/map.dart';
 import 'package:epharma/screens/deliveryRoute/deliveryRoute.dart';
@@ -221,16 +222,16 @@ class _OngoingOrdersState extends State<OngoingOrders> {
                     enabled: false,
                   ),
                 ),
-                Container(
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      icon: const Icon(Icons.attach_money),
-                      labelText: "Location - TEST",
-                    ),
-                    initialValue: latitude.toString(),
-                    enabled: false,
-                  ),
-                ),
+                // Container(
+                //   child: TextFormField(
+                //     decoration: const InputDecoration(
+                //       icon: const Icon(Icons.attach_money),
+                //       labelText: "Location - TEST",
+                //     ),
+                //     initialValue: latitude.toString(),
+                //     enabled: false,
+                //   ),
+                // ),
               ],
             ),
             actions: <Widget>[
