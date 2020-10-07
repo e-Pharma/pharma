@@ -14,7 +14,6 @@ class CompletedOrders extends StatefulWidget {
 class _CompletedOrdersState extends State<CompletedOrders> {
   String token;
   List completedOrderData;
-
   String id;
   String name;
   String clientId;
@@ -27,7 +26,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
   // ignore: non_constant_identifier_names
   String ordered_at;
   // ignore: non_constant_identifier_names
-  String delivery_charges;
+  int delivery_charges;
   // ignore: non_constant_identifier_names
   int full_amount;
   // ignore: non_constant_identifier_names
@@ -41,7 +40,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
     print(decodedToken.claims['id']);
 
     Response response = await get(
-        "https://e-pharma-server.herokuapp.com/driver/completedOrders");
+        "https://e-pharma-server.herokuapp.com/driver/deliveredOrders");
     return jsonDecode(response.body)['data'];
   }
 
@@ -60,6 +59,8 @@ class _CompletedOrdersState extends State<CompletedOrders> {
             } else {
               print("Order details came to the front end");
               completedOrderData = snapshot.data;
+
+            print(completedOrderData);
 
               return ListView.builder(
                   itemCount: completedOrderData.length,

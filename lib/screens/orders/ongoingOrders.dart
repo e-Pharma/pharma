@@ -50,7 +50,7 @@ class _OngoingOrdersState extends State<OngoingOrders> {
     });
     var decodedToken = new JWT.parse(token);
     print(decodedToken.claims['id']);
-    String status = 'completed';
+    String status = 'delivered';
     Response response = await post(
       "https://e-pharma-server.herokuapp.com/driver/updateOrderStatus/" +
           orderid,
