@@ -172,7 +172,7 @@ class _EditProfileState extends State<EditProfile> {
                                   child: (_image != null)
                                       ? Image.file(_image, fit: BoxFit.fill)
                                       : Image.asset(
-                                          'images/driver.jpg',
+                                          'images/dillon.jpeg',
                                           fit: BoxFit.fill,
                                         ),
                                 ),

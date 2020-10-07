@@ -154,13 +154,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: <Widget>[
                           CircleAvatar(
                             radius: 50.0,
-                            backgroundImage: AssetImage('images/driver.jpg'),
+                            backgroundImage: AssetImage('images/dillon.jpeg'),
                           ),
                           Padding(
                             
                             padding: const EdgeInsets.all(5.0),
                             child: Text(
-                              'Michael',
+                              'Dillon Perera',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 20,

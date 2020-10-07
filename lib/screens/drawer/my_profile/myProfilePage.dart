@@ -70,7 +70,6 @@ class _ProfileState extends State<Profile> {
           builder: (context, snapshot) {
             if (snapshot.data == null) {
               print("kuchis ");
-              // return Text("Kukku baba");
               return Center(child: SpinKitChasingDots(color: Colors.cyan[400]));
             } else {
               // print("data came to the frontend");
@@ -98,7 +97,7 @@ class _ProfileState extends State<Profile> {
                             width: 90.0,
                             decoration: BoxDecoration(
                               image: new DecorationImage(
-                                image: new AssetImage("images/driver.jpg"),
+                                image: new AssetImage("images/dillon.jpeg"),
                               ),
                               shape: BoxShape.circle,
                               border: Border.all(
