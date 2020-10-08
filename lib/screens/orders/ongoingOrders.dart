@@ -127,11 +127,11 @@ class _OngoingOrdersState extends State<OngoingOrders> {
             return ListView.builder(
               itemCount: orderData.length,
               itemBuilder: (BuildContext context, int index) {
-                name = orderData[index]['name'];
+                name = orderData[index]['patient'];
                 contact = orderData[index]['contact'];
                 return Container(
                   child: ListTile(
-                    title: Text(orderData[index]['name']),
+                    title: Text(orderData[index]['patient']),
                     subtitle: Text(orderData[index]['delivery_address']),
                     trailing: Icon(Icons.keyboard_arrow_right),
                     onTap: () {
@@ -162,6 +162,8 @@ class _OngoingOrdersState extends State<OngoingOrders> {
           full_amount = orderData['full_amount'];
           String order_id = orderData["_id"];
 
+          patient = orderData['patient'];
+
           latitude = orderData["lat"];
           longitude = orderData["long"];
 
@@ -178,7 +180,7 @@ class _OngoingOrdersState extends State<OngoingOrders> {
                       icon: const Icon(Icons.person),
                       labelText: "Name",
                     ),
-                    initialValue: name,
+                    initialValue: patient,
                     enabled: false,
                   ),
                 ),

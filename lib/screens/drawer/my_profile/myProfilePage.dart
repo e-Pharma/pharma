@@ -69,7 +69,6 @@ class _ProfileState extends State<Profile> {
           future: this.getData(),
           builder: (context, snapshot) {
             if (snapshot.data == null) {
-              print("kuchis ");
               return Center(child: SpinKitChasingDots(color: Colors.cyan[400]));
             } else {
               // print("data came to the frontend");
@@ -115,7 +114,7 @@ class _ProfileState extends State<Profile> {
                     child: ListTile(
                       title: Center(
                         child: Text(
-                          driverData['user_name'],
+                          driverData['firstName'] + driverData['lastName'],
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w600,

@@ -65,11 +65,11 @@ class _CompletedOrdersState extends State<CompletedOrders> {
               return ListView.builder(
                   itemCount: completedOrderData.length,
                   itemBuilder: (BuildContext context, int index) {
-                    name = completedOrderData[index]['name'];
+                    name = completedOrderData[index]['patient'];
                     contact = completedOrderData[index]['contact'];
                     return Container(
                       child: ListTile(
-                        title: Text(completedOrderData[index]['name']),
+                        title: Text(completedOrderData[index]['patient']),
                         subtitle:
                             Text(completedOrderData[index]['delivery_address']),
                         trailing: Icon(Icons.keyboard_arrow_right),
@@ -95,6 +95,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
           full_amount = completedOrderData['full_amount'];
           delivery_charges = completedOrderData['delivery_charges'];
           prescription_url = completedOrderData['prescription_url'];
+          patient = completedOrderData['patient'];
 
           return AlertDialog(
             shape: RoundedRectangleBorder(
@@ -109,7 +110,7 @@ class _CompletedOrdersState extends State<CompletedOrders> {
                       icon: const Icon(Icons.person),
                       labelText: "Name",
                     ),
-                    initialValue: name,
+                    initialValue: patient,
                     enabled: false,
                   ),
                 ),
@@ -187,16 +188,16 @@ class _CompletedOrdersState extends State<CompletedOrders> {
                             fit: BoxFit.fill)),
                   ),
                 ),
-                Container(
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      icon: const Icon(Icons.access_time),
-                      labelText: "Delivered at",
-                    ),
-                    initialValue: "",
-                    enabled: false,
-                  ),
-                ),
+                // Container(
+                //   child: TextFormField(
+                //     decoration: const InputDecoration(
+                //       icon: const Icon(Icons.access_time),
+                //       labelText: "Delivered at",
+                //     ),
+                //     initialValue: "",
+                //     enabled: false,
+                //   ),
+                // ),
               ],
             ),
           );

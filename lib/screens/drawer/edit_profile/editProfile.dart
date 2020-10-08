@@ -33,6 +33,8 @@ class _EditProfileState extends State<EditProfile> {
   String address;
   String phone;
   //String email;
+  String firstName;
+  String lastName;
 
   Future getData() async {
     await SharedPreferences.getInstance().then((prefs) {
@@ -86,9 +88,13 @@ class _EditProfileState extends State<EditProfile> {
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, String>{
-          'user_name': user_name,
+          // 'user_name': user_name,
           'address': address,
-          'phone': phone
+          'phone': phone,
+          // 'user_name': firstName + lastName, 
+          'firstName' : firstName,
+          'lastName' : lastName,
+
         }),
       );
 
@@ -209,7 +215,8 @@ class _EditProfileState extends State<EditProfile> {
                           icon: const Icon(Icons.person),
                           labelText: "Name",
                         ),
-                        initialValue: driverData['user_name'],
+                        // initialValue: driverData['user_name'],
+                        initialValue: driverData['firstName'] + driverData['lastName'],
                         //enabled: false,
                         onChanged: (newValue) => user_name = newValue,
                       ),

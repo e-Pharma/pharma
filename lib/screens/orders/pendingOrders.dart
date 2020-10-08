@@ -151,13 +151,13 @@ class _PendingOrdersState extends State<PendingOrders> {
                   // itemCount: orderData.length,
                   itemCount: orderData.length,
                   itemBuilder: (BuildContext context, int index) {
-                    name = orderData[index]['name'];
+                    name = orderData[index]['patient'];
                     contact = orderData[index]['contact'];
                     
                     return Container(
                       // height: 450,
                       child: ListTile(
-                        title: Text(orderData[index]['name']),
+                        title: Text(orderData[index]['patient']),
                         subtitle: Text(orderData[index]['delivery_address']),
                         trailing: Icon(Icons.keyboard_arrow_right),
                         onTap: () {
@@ -184,6 +184,7 @@ class _PendingOrdersState extends State<PendingOrders> {
           nic = orderData['nic'];
           full_amount = orderData['full_amount'];
           String order_id = orderData["_id"];
+          patient = orderData['patient'];
           
 
           return AlertDialog(
@@ -199,7 +200,7 @@ class _PendingOrdersState extends State<PendingOrders> {
                       icon: const Icon(Icons.person),
                       labelText: "Name",
                     ),
-                    initialValue: name,
+                    initialValue: patient,
                     enabled: false,
                   ),
                 ),
